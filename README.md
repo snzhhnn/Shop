@@ -18,8 +18,10 @@ Moving on, I would like to tell you about my future plans for the next 3 weeks.
 And sooo, my schema will incude the following points :
 
    
-| Point | DATE |
-|----------------|:---------:|
-| design and implement database | 26.11-27.11 |
-| develop backend | 28.11-11.12 | 
-| *develop frontend | 12.12-15.12 | 
+| Point | DATE | Description |
+|----------------|:---------:|----------------|
+| design and implement database | 26.11-27.11 | create tables in DB and model layer in my application |
+| create repository layer | 28.11-01.12 | responsible for business rules and knowledge, providing interfaces for repositoriese |
+| create controller layer | 02.12-08.12 | acts as an entrypoint for application services |
+| testing the application and error correction | 09.12-10.12 | function testing to proceed to the next point |
+| *develop frontend | 11.12-15.12 | 
