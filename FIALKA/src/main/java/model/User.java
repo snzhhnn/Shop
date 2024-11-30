@@ -22,6 +22,7 @@ public class User {
     private String lastname;
     private String firstname;
     private String surname;
+    private String password;
     private String username;
     private String phoneNumber;
     private String gender;

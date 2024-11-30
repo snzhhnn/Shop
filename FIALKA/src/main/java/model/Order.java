@@ -19,8 +19,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private double total_cost;
-    private LocalDate order_date;
+    private double totalCost;
+    private LocalDate orderDate;
 
     @ManyToOne
     private User user;
