@@ -1,4 +1,4 @@
-package com.fialka.contract;
+package com.fialka.dto;
 
 import lombok.Builder;
 import lombok.Data;

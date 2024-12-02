@@ -3,9 +3,10 @@ package com.fialka.repository;
 import com.fialka.model.ProductLocation;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IProductLocationRepository {
-    ProductLocation getByID(ProductLocation productLocation);
+    ProductLocation getByID(UUID id);
     ProductLocation save(ProductLocation productLocation);
     ProductLocation update(ProductLocation productLocation);
     ProductLocation delete(ProductLocation productLocation);

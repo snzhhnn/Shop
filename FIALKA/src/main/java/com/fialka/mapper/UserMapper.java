@@ -1,6 +1,6 @@
-package com.fialka.contract.mapper;
+package com.fialka.mapper;
 
-import com.fialka.contract.UserDTO;
+import com.fialka.dto.UserDTO;
 import com.fialka.model.User;
 
 public class UserMapper {
@@ -14,7 +14,9 @@ public class UserMapper {
                 .lastname(userDTO.getLastname())
                 .firstname(userDTO.getFirstname())
                 .surname(userDTO.getSurname())
+                .password(userDTO.getPassword())
                 .username(userDTO.getUsername())
+                .birthdate(userDTO.getBirthdate())
                 .phoneNumber(userDTO.getPhoneNumber())
                 .gender(userDTO.getGender())
                 .address(userDTO.getAddress())
@@ -34,6 +36,8 @@ public class UserMapper {
                 .firstname(user.getFirstname())
                 .surname(user.getSurname())
                 .username(user.getUsername())
+                .password(user.getPassword())
+                .birthdate(user.getBirthdate())
                 .phoneNumber(user.getPhoneNumber())
                 .gender(user.getGender())
                 .address(user.getAddress())

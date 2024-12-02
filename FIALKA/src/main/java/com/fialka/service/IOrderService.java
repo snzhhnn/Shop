@@ -1,11 +1,12 @@
 package com.fialka.service;
 
-import com.fialka.contract.OrderDTO;
+import com.fialka.dto.OrderDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IOrderService {
-    OrderDTO getByID(OrderDTO orderDTO);
+    OrderDTO getByID(UUID id);
     OrderDTO save(OrderDTO orderDTO);
     OrderDTO update(OrderDTO orderDTO);
     OrderDTO delete(OrderDTO orderDTO);

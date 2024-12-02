@@ -1,11 +1,12 @@
 package com.fialka.service;
 
-import com.fialka.contract.UserDTO;
+import com.fialka.dto.UserDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IUserService {
-    UserDTO getByID(UserDTO userDTO);
+    UserDTO getByID(UUID id);
     UserDTO save(UserDTO userDTO);
     UserDTO update(UserDTO userDTO);
     UserDTO delete(UserDTO userDTO);

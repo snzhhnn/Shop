@@ -3,16 +3,17 @@ package com.fialka.repository.Impl;
 import com.fialka.model.Order;
 import org.hibernate.Session;
 import com.fialka.repository.IOrderRepository;
-import util.HibernateUtil;
+import com.fialka.util.HibernateUtil;
 
 import java.util.List;
+import java.util.UUID;
 
 public class OrderRepository implements IOrderRepository {
     @Override
-    public Order getByID(Order order) {
+    public Order getByID(UUID id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.get(Order.class, order);
+        Order order = session.get(Order.class, id);
         session.getTransaction().commit();
         session.close();
         return order;
@@ -22,7 +23,7 @@ public class OrderRepository implements IOrderRepository {
     public Order save(Order order) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.persist(order);
+        session.save(order);
         session.getTransaction().commit();
         session.close();
         return order;

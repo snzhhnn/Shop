@@ -1,8 +1,9 @@
-package com.fialka.contract;
+package com.fialka.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -13,6 +14,8 @@ public class UserDTO {
     private String firstname;
     private String surname;
     private String username;
+    private String password;
+    private LocalDate birthdate;
     private String phoneNumber;
     private String gender;
     private String address;

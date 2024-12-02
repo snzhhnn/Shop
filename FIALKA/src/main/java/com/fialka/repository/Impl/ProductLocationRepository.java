@@ -3,16 +3,17 @@ package com.fialka.repository.Impl;
 import com.fialka.model.ProductLocation;
 import org.hibernate.Session;
 import com.fialka.repository.IProductLocationRepository;
-import util.HibernateUtil;
+import com.fialka.util.HibernateUtil;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ProductLocationRepository implements IProductLocationRepository {
     @Override
-    public ProductLocation getByID(ProductLocation productLocation) {
+    public ProductLocation getByID(UUID id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.get(ProductLocation.class, productLocation);
+        ProductLocation productLocation = session.get(ProductLocation.class, id);
         session.getTransaction().commit();
         session.close();
         return productLocation;
@@ -22,7 +23,7 @@ public class ProductLocationRepository implements IProductLocationRepository {
     public ProductLocation save(ProductLocation productLocation) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.persist(productLocation);
+        session.save(productLocation);
         session.getTransaction().commit();
         session.close();
         return productLocation;

@@ -1,13 +1,14 @@
 package com.fialka.service.Impl;
 
-import com.fialka.contract.UserDTO;
-import com.fialka.contract.mapper.UserMapper;
+import com.fialka.dto.UserDTO;
+import com.fialka.mapper.UserMapper;
 import lombok.AllArgsConstructor;
 import com.fialka.model.User;
 import com.fialka.repository.IUserRepository;
 import com.fialka.service.IUserService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -16,8 +17,8 @@ public class UserService implements IUserService {
     private IUserRepository repository;
 
     @Override
-    public UserDTO getByID(UserDTO userDTO) {
-        return UserMapper.toDTO(repository.getByID(UserMapper.toEntity(userDTO)));
+    public UserDTO getByID(UUID id) {
+        return UserMapper.toDTO(repository.getByID(id));
     }
 
     @Override

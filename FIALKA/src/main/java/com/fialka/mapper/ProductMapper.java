@@ -1,6 +1,6 @@
-package com.fialka.contract.mapper;
+package com.fialka.mapper;
 
-import com.fialka.contract.ProductDTO;
+import com.fialka.dto.ProductDTO;
 import com.fialka.model.Product;
 
 public class ProductMapper {

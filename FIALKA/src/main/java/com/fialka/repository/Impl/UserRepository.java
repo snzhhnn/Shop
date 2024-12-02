@@ -3,28 +3,28 @@ package com.fialka.repository.Impl;
 import com.fialka.model.User;
 import org.hibernate.Session;
 import com.fialka.repository.IUserRepository;
-import util.HibernateUtil;
+import com.fialka.util.HibernateUtil;
 
 import java.util.List;
+import java.util.UUID;
 
 public class UserRepository implements IUserRepository {
     @Override
-    public User getByID(User user) {
+    public User getByID(UUID id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.get(User.class, user);
+        User loadUser = session.get(User.class, id);
         session.getTransaction().commit();
         session.close();
-        return user;
+        return loadUser;
     }
 
     @Override
     public User save(User user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.persist(user);
+        session.save(user);
         session.getTransaction().commit();
-        session.close();
         return user;
     }
 

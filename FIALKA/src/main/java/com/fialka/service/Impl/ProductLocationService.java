@@ -1,13 +1,14 @@
 package com.fialka.service.Impl;
 
-import com.fialka.contract.ProductLocationDTO;
-import com.fialka.contract.mapper.ProductLocationMapper;
+import com.fialka.dto.ProductLocationDTO;
+import com.fialka.mapper.ProductLocationMapper;
 import lombok.AllArgsConstructor;
 import com.fialka.model.ProductLocation;
 import com.fialka.repository.IProductLocationRepository;
 import com.fialka.service.IProductLocationService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -16,8 +17,8 @@ public class ProductLocationService implements IProductLocationService {
     private IProductLocationRepository repository;
 
     @Override
-    public ProductLocationDTO getByID(ProductLocationDTO productLocationDTO) {
-        return ProductLocationMapper.toDTO(repository.getByID(ProductLocationMapper.toEntity(productLocationDTO)));
+    public ProductLocationDTO getByID(UUID id) {
+        return ProductLocationMapper.toDTO(repository.getByID(id));
     }
 
     @Override

@@ -13,11 +13,12 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "product_location")
 public class ProductLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    private int quantity;
 
     @ManyToOne
     private Product product;

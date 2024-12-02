@@ -1,13 +1,14 @@
 package com.fialka.service.Impl;
 
-import com.fialka.contract.WarehouseDTO;
-import com.fialka.contract.mapper.WarehouseMapper;
+import com.fialka.dto.WarehouseDTO;
+import com.fialka.mapper.WarehouseMapper;
 import lombok.AllArgsConstructor;
 import com.fialka.model.Warehouse;
 import com.fialka.repository.IWarehouseRepository;
 import com.fialka.service.IWarehouseService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -16,8 +17,8 @@ public class WarehouseService implements IWarehouseService {
     private IWarehouseRepository repository;
 
     @Override
-    public WarehouseDTO getByID(WarehouseDTO warehouseDTO) {
-        return WarehouseMapper.toDTO(repository.getByID(WarehouseMapper.toEntity(warehouseDTO)));
+    public WarehouseDTO getByID(UUID id) {
+        return WarehouseMapper.toDTO(repository.getByID(id));
     }
 
     @Override

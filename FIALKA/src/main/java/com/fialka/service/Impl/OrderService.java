@@ -1,13 +1,14 @@
 package com.fialka.service.Impl;
 
-import com.fialka.contract.OrderDTO;
-import com.fialka.contract.mapper.OrderMapper;
+import com.fialka.dto.OrderDTO;
+import com.fialka.mapper.OrderMapper;
 import lombok.AllArgsConstructor;
 import com.fialka.model.Order;
 import com.fialka.repository.IOrderRepository;
 import com.fialka.service.IOrderService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -16,8 +17,8 @@ public class OrderService implements IOrderService {
     private IOrderRepository repository;
 
     @Override
-    public OrderDTO getByID(OrderDTO orderDTO) {
-        return OrderMapper.toDTO(repository.getByID(OrderMapper.toEntity(orderDTO)));
+    public OrderDTO getByID(UUID id) {
+        return OrderMapper.toDTO(repository.getByID(id));
     }
 
     @Override

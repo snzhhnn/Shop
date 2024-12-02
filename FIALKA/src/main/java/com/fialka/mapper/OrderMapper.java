@@ -1,6 +1,6 @@
-package com.fialka.contract.mapper;
+package com.fialka.mapper;
 
-import com.fialka.contract.OrderDTO;
+import com.fialka.dto.OrderDTO;
 import com.fialka.model.Order;
 import com.fialka.model.User;
 

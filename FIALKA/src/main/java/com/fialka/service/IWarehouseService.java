@@ -1,11 +1,12 @@
 package com.fialka.service;
 
-import com.fialka.contract.WarehouseDTO;
+import com.fialka.dto.WarehouseDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IWarehouseService {
-    WarehouseDTO getByID(WarehouseDTO warehouseDTO);
+    WarehouseDTO getByID(UUID id);
     WarehouseDTO save(WarehouseDTO warehouseDTO);
     WarehouseDTO update(WarehouseDTO warehouseDTO);
     WarehouseDTO delete(WarehouseDTO warehouseDTO);

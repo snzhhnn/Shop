@@ -3,16 +3,17 @@ package com.fialka.repository.Impl;
 import com.fialka.model.Warehouse;
 import org.hibernate.Session;
 import com.fialka.repository.IWarehouseRepository;
-import util.HibernateUtil;
+import com.fialka.util.HibernateUtil;
 
 import java.util.List;
+import java.util.UUID;
 
 public class WarehouseRepository implements IWarehouseRepository {
     @Override
-    public Warehouse getByID(Warehouse warehouse) {
+    public Warehouse getByID(UUID id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.get(Warehouse.class, warehouse);
+        Warehouse warehouse = session.get(Warehouse.class, id);
         session.getTransaction().commit();
         session.close();
         return warehouse;
@@ -22,7 +23,7 @@ public class WarehouseRepository implements IWarehouseRepository {
     public Warehouse save(Warehouse warehouse) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.persist(warehouse);
+        session.save(warehouse);
         session.getTransaction().commit();
         session.close();
         return warehouse;

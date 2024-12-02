@@ -3,16 +3,17 @@ package com.fialka.repository.Impl;
 import com.fialka.model.Product;
 import org.hibernate.Session;
 import com.fialka.repository.IProductRepository;
-import util.HibernateUtil;
+import com.fialka.util.HibernateUtil;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ProductRepository implements IProductRepository {
     @Override
-    public Product getByID(Product product) {
+    public Product getByID(UUID id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.get(Product.class, product);
+        Product product = session.get(Product.class, id);
         session.getTransaction().commit();
         session.close();
         return product;
@@ -22,7 +23,7 @@ public class ProductRepository implements IProductRepository {
     public Product save(Product product) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.persist(product);
+        session.save(product);
         session.getTransaction().commit();
         session.close();
         return product;
