@@ -1,4 +1,4 @@
-package com.fialka.dto;
+package com.fialka.dto.request;
 
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class OrderDTO {
+public class OrderRequest {
     private UUID id;
     private LocalDate orderDate;
     private UUID userID;

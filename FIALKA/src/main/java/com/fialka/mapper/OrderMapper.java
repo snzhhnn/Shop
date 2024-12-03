@@ -1,31 +1,29 @@
 package com.fialka.mapper;
 
-import com.fialka.dto.OrderDTO;
+import com.fialka.dto.request.OrderRequest;
+import com.fialka.dto.response.OrderResponse;
 import com.fialka.model.Order;
-import com.fialka.model.User;
 
 public class OrderMapper {
-    public static Order toEntity(OrderDTO orderDTO) {
-        if (orderDTO == null) {
+    public static Order toEntity(OrderRequest orderRequest) {
+        if (orderRequest == null) {
             return null;
         }
 
         return Order.builder()
-                .id(orderDTO.getId())
-                .orderDate(orderDTO.getOrderDate())
-                .user(User.builder().id(orderDTO.getUserID()).build())
+                .id(orderRequest.getId())
+                .orderDate(orderRequest.getOrderDate())
                 .build();
     }
 
-    public static OrderDTO toDTO(Order order) {
+    public static OrderResponse toDTO(Order order) {
         if (order == null) {
             return null;
         }
 
-        return OrderDTO.builder()
+        return OrderResponse.builder()
                 .id(order.getId())
                 .orderDate(order.getOrderDate())
-                .userID(order.getUser().getId())
                 .build();
     }
 }

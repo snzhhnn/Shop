@@ -1,7 +1,10 @@
 package com.fialka.service.Impl;
 
-import com.fialka.dto.OrderDTO;
+import com.fialka.dto.request.OrderRequest;
+import com.fialka.dto.response.OrderResponse;
 import com.fialka.mapper.OrderMapper;
+import com.fialka.model.User;
+import com.fialka.repository.IUserRepository;
 import lombok.AllArgsConstructor;
 import com.fialka.model.Order;
 import com.fialka.repository.IOrderRepository;
@@ -15,29 +18,36 @@ import java.util.stream.Collectors;
 public class OrderService implements IOrderService {
 
     private IOrderRepository repository;
+    private IUserRepository userRepository;
 
     @Override
-    public OrderDTO getByID(UUID id) {
+    public OrderResponse getByID(UUID id) {
         return OrderMapper.toDTO(repository.getByID(id));
     }
 
     @Override
-    public OrderDTO save(OrderDTO orderDTO) {
-        return OrderMapper.toDTO(repository.save(OrderMapper.toEntity(orderDTO)));
+    public OrderResponse save(OrderRequest orderRequest) {
+        User user = userRepository.getByID(orderRequest.getUserID());
+        Order order = OrderMapper.toEntity(orderRequest);
+        order.setUser(user);
+        return OrderMapper.toDTO(repository.save(order));
     }
 
     @Override
-    public OrderDTO update(OrderDTO orderDTO) {
-        return OrderMapper.toDTO(repository.update(OrderMapper.toEntity(orderDTO)));
+    public OrderResponse update(OrderRequest orderRequest) {
+        User user = userRepository.getByID(orderRequest.getUserID());
+        Order order = OrderMapper.toEntity(orderRequest);
+        order.setUser(user);
+        return OrderMapper.toDTO(repository.update(order));
     }
 
     @Override
-    public OrderDTO delete(OrderDTO orderDTO) {
-        return OrderMapper.toDTO(repository.delete(OrderMapper.toEntity(orderDTO)));
+    public OrderResponse delete(OrderRequest orderRequest) {
+        return OrderMapper.toDTO(repository.delete(OrderMapper.toEntity(orderRequest)));
     }
 
     @Override
-    public List<OrderDTO> findAll() {
+    public List<OrderResponse> findAll() {
         List<Order> orders = repository.findAll();
         return orders.stream()
                 .map(OrderMapper::toDTO)
@@ -45,7 +55,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<OrderDTO> filter() {
+    public List<OrderResponse> filter() {
         return null;
     }
 }

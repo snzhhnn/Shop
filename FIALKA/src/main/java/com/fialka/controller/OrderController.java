@@ -1,8 +1,9 @@
 package com.fialka.controller;
 
 import com.fialka.adapter.LocalDateAdapter;
-import com.fialka.dto.OrderDTO;
+import com.fialka.dto.request.OrderRequest;
 import com.fialka.repository.Impl.OrderRepository;
+import com.fialka.repository.Impl.UserRepository;
 import com.fialka.service.IOrderService;
 import com.fialka.service.Impl.OrderService;
 import com.google.gson.Gson;
@@ -19,7 +20,7 @@ import java.util.UUID;
 
 @WebServlet(name = "orderController", value = "/order")
 public class OrderController extends HttpServlet {
-    private final IOrderService service = new OrderService(new OrderRepository());
+    private final IOrderService service = new OrderService(new OrderRepository(), new UserRepository());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
@@ -33,33 +34,33 @@ public class OrderController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        OrderDTO orderDTO = getJsonFromRequest(req);
-        service.save(orderDTO);
+        OrderRequest orderRequest = getJsonFromRequest(req);
+        service.save(orderRequest);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
-        OrderDTO orderDTO = getJsonFromRequest(req);
-        service.update(orderDTO);
+        OrderRequest orderRequest = getJsonFromRequest(req);
+        service.update(orderRequest);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        OrderDTO orderDTO = getJsonFromRequest(req);
-        service.delete(orderDTO);
+        OrderRequest orderRequest = getJsonFromRequest(req);
+        service.delete(orderRequest);
     }
 
-    private OrderDTO getJsonFromRequest(HttpServletRequest req) {
-        OrderDTO orderDTO = null;
+    private OrderRequest getJsonFromRequest(HttpServletRequest req) {
+        OrderRequest orderRequest = null;
         try (BufferedReader reader = req.getReader()) {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                     .create();
-            orderDTO = gson.fromJson(reader, OrderDTO.class);
+            orderRequest = gson.fromJson(reader, OrderRequest.class);
         } catch (IOException ex) {
-            req.setAttribute("orderDTO", "There was an error: " + ex.getMessage());
+            req.setAttribute("orderRequest", "There was an error: " + ex.getMessage());
         }
 
-        return orderDTO;
+        return orderRequest;
     }
 }

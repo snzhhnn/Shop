@@ -1,7 +1,12 @@
 package com.fialka.service.Impl;
 
-import com.fialka.dto.ProductLocationDTO;
+import com.fialka.dto.request.ProductLocationRequest;
+import com.fialka.dto.response.ProductLocationResponse;
 import com.fialka.mapper.ProductLocationMapper;
+import com.fialka.model.Product;
+import com.fialka.model.Warehouse;
+import com.fialka.repository.IProductRepository;
+import com.fialka.repository.IWarehouseRepository;
 import lombok.AllArgsConstructor;
 import com.fialka.model.ProductLocation;
 import com.fialka.repository.IProductLocationRepository;
@@ -15,29 +20,41 @@ import java.util.stream.Collectors;
 public class ProductLocationService implements IProductLocationService {
 
     private IProductLocationRepository repository;
+    private IProductRepository productRepository;
+    private IWarehouseRepository warehouseRepository;
 
     @Override
-    public ProductLocationDTO getByID(UUID id) {
+    public ProductLocationResponse getByID(UUID id) {
         return ProductLocationMapper.toDTO(repository.getByID(id));
     }
 
     @Override
-    public ProductLocationDTO save(ProductLocationDTO productLocationDTO) {
-        return ProductLocationMapper.toDTO(repository.save(ProductLocationMapper.toEntity(productLocationDTO)));
+    public ProductLocationResponse save(ProductLocationRequest productLocationRequest) {
+        Product product = productRepository.getByID(productLocationRequest.getProductID());
+        Warehouse warehouse = warehouseRepository.getByID(productLocationRequest.getWarehouseID());
+        ProductLocation productLocation = ProductLocationMapper.toEntity(productLocationRequest);
+        productLocation.setProduct(product);
+        productLocation.setWarehouse(warehouse);
+        return ProductLocationMapper.toDTO(repository.save(productLocation));
     }
 
     @Override
-    public ProductLocationDTO update(ProductLocationDTO productLocationDTO) {
-        return ProductLocationMapper.toDTO(repository.update(ProductLocationMapper.toEntity(productLocationDTO)));
+    public ProductLocationResponse update(ProductLocationRequest productLocationRequest) {
+        Product product = productRepository.getByID(productLocationRequest.getProductID());
+        Warehouse warehouse = warehouseRepository.getByID(productLocationRequest.getWarehouseID());
+        ProductLocation productLocation = ProductLocationMapper.toEntity(productLocationRequest);
+        productLocation.setProduct(product);
+        productLocation.setWarehouse(warehouse);
+        return ProductLocationMapper.toDTO(repository.update(productLocation));
     }
 
     @Override
-    public ProductLocationDTO delete(ProductLocationDTO productLocationDTO) {
-        return ProductLocationMapper.toDTO(repository.delete(ProductLocationMapper.toEntity(productLocationDTO)));
+    public ProductLocationResponse delete(ProductLocationRequest productLocationRequest) {
+        return ProductLocationMapper.toDTO(repository.delete(ProductLocationMapper.toEntity(productLocationRequest)));
     }
 
     @Override
-    public List<ProductLocationDTO> findAll() {
+    public List<ProductLocationResponse> findAll() {
         List<ProductLocation> productLocations = repository.findAll();
         return productLocations.stream()
                 .map(ProductLocationMapper::toDTO)
@@ -45,7 +62,7 @@ public class ProductLocationService implements IProductLocationService {
     }
 
     @Override
-    public List<ProductLocationDTO> filter() {
+    public List<ProductLocationResponse> filter() {
         return null;
     }
 }

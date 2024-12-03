@@ -1,32 +1,31 @@
 package com.fialka.mapper;
 
-import com.fialka.dto.ProductLocationDTO;
-import com.fialka.model.Product;
+import com.fialka.dto.request.ProductLocationRequest;
+import com.fialka.dto.response.ProductLocationResponse;
 import com.fialka.model.ProductLocation;
-import com.fialka.model.Warehouse;
 
 public class ProductLocationMapper {
-    public static ProductLocation toEntity(ProductLocationDTO productLocationDTO) {
-        if (productLocationDTO == null) {
+    public static ProductLocation toEntity(ProductLocationRequest productLocationRequest) {
+        if (productLocationRequest == null) {
             return null;
         }
 
         return ProductLocation.builder()
-                .id(productLocationDTO.getId())
-                .product(Product.builder().build())
-                .warehouse(Warehouse.builder().build())
+                .id(productLocationRequest.getId())
+                .quantity(productLocationRequest.getQuantity())
                 .build();
     }
 
-    public static ProductLocationDTO toDTO(ProductLocation productLocation) {
+    public static ProductLocationResponse toDTO(ProductLocation productLocation) {
         if (productLocation == null) {
             return null;
         }
 
-        return ProductLocationDTO.builder()
+        return ProductLocationResponse.builder()
                 .id(productLocation.getId())
-                .productID(productLocation.getProduct().getId())
-                .warehouseID(productLocation.getWarehouse().getId())
+                .quantity(productLocation.getQuantity())
+                .product(ProductMapper.toDTO(productLocation.getProduct()))
+                .warehouse(WarehouseMapper.toDTO(productLocation.getWarehouse()))
                 .build();
     }
 }

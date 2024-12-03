@@ -1,7 +1,10 @@
 package com.fialka.controller;
 
-import com.fialka.dto.ProductLocationDTO;
+import com.fialka.dto.request.ProductLocationRequest;
+import com.fialka.dto.response.ProductLocationResponse;
 import com.fialka.repository.Impl.ProductLocationRepository;
+import com.fialka.repository.Impl.ProductRepository;
+import com.fialka.repository.Impl.WarehouseRepository;
 import com.fialka.service.IProductLocationService;
 import com.fialka.service.Impl.ProductLocationService;
 import com.google.gson.Gson;
@@ -16,7 +19,7 @@ import java.util.UUID;
 
 @WebServlet(name = "productLocationController", value = "/product-location")
 public class ProductLocationController extends HttpServlet {
-    private final IProductLocationService service = new ProductLocationService(new ProductLocationRepository());
+    private final IProductLocationService service = new ProductLocationService(new ProductLocationRepository(), new ProductRepository(), new WarehouseRepository());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
@@ -30,27 +33,27 @@ public class ProductLocationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        ProductLocationDTO productLocationDTO = getJsonFromRequest(req);
-        service.save(productLocationDTO);
+        ProductLocationRequest productLocationRequest = getJsonFromRequest(req);
+        service.save(productLocationRequest);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
-        ProductLocationDTO productLocationDTO = getJsonFromRequest(req);
-        service.update(productLocationDTO);
+        ProductLocationRequest productLocationRequest = getJsonFromRequest(req);
+        service.update(productLocationRequest);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        ProductLocationDTO productLocationDTO = getJsonFromRequest(req);
-        service.delete(productLocationDTO);
+        ProductLocationRequest productLocationRequest = getJsonFromRequest(req);
+        service.delete(productLocationRequest);
     }
 
-    private ProductLocationDTO getJsonFromRequest(HttpServletRequest req) {
-        ProductLocationDTO productLocationDTO = null;
+    private ProductLocationRequest getJsonFromRequest(HttpServletRequest req) {
+        ProductLocationRequest productLocationDTO = null;
         try (BufferedReader reader = req.getReader()) {
             Gson gson = new Gson();
-            productLocationDTO = gson.fromJson(reader, ProductLocationDTO.class);
+            productLocationDTO = gson.fromJson(reader, ProductLocationRequest.class);
         } catch (IOException ex) {
             req.setAttribute("productLocationDTO", "There was an error: " + ex.getMessage());
         }
