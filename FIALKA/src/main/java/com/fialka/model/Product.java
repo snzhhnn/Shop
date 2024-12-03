@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fialka.model.ProductLocation;
 
 import java.util.List;
 import java.util.UUID;

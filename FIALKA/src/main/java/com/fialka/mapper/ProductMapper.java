@@ -3,6 +3,10 @@ package com.fialka.mapper;
 import com.fialka.dto.ProductDTO;
 import com.fialka.model.Product;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
 public class ProductMapper {
     public static Product toEntity(ProductDTO productDTO) {
         if (productDTO == null) {

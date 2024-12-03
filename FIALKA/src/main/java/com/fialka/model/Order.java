@@ -21,7 +21,6 @@ public class Order {
     private UUID id;
     private double totalCost;
     private LocalDate orderDate;
-    private int quantity;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     private User user;

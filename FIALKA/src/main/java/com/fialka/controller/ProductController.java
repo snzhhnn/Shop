@@ -5,6 +5,7 @@ import com.fialka.repository.Impl.ProductRepository;
 import com.fialka.service.IProductService;
 import com.fialka.service.Impl.ProductService;
 import com.google.gson.Gson;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @WebServlet(name = "productController", value = "/product")
@@ -20,12 +22,14 @@ public class ProductController extends HttpServlet {
     private final IProductService service = new ProductService(new ProductRepository());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("id") != null) {
             UUID id  = UUID.fromString(req.getParameter("id"));
             service.getByID(id);
         } else {
-            service.findAll();
+            List<ProductDTO> productDTOS = service.findAll();
+            req.setAttribute("productDTOS", productDTOS);
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         }
     }
 
