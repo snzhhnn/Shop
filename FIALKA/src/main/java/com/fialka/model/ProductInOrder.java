@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -14,14 +13,16 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "\"order\"")
-public class Order {
+@Table(name = "product_in_order")
+public class ProductInOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private double totalCost;
-    private LocalDate orderDate;
+    private int quantity;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    private User user;
+    @ManyToOne
+    private Product product;
+
+    @ManyToOne
+    private Ordering order;
 }

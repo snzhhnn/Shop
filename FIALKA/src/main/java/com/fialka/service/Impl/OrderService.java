@@ -6,7 +6,7 @@ import com.fialka.mapper.OrderMapper;
 import com.fialka.model.User;
 import com.fialka.repository.IUserRepository;
 import lombok.AllArgsConstructor;
-import com.fialka.model.Order;
+import com.fialka.model.Ordering;
 import com.fialka.repository.IOrderRepository;
 import com.fialka.service.IOrderService;
 
@@ -28,7 +28,7 @@ public class OrderService implements IOrderService {
     @Override
     public OrderResponse save(OrderRequest orderRequest) {
         User user = userRepository.getByID(orderRequest.getUserID());
-        Order order = OrderMapper.toEntity(orderRequest);
+        Ordering order = OrderMapper.toEntity(orderRequest);
         order.setUser(user);
         return OrderMapper.toDTO(repository.save(order));
     }
@@ -36,7 +36,7 @@ public class OrderService implements IOrderService {
     @Override
     public OrderResponse update(OrderRequest orderRequest) {
         User user = userRepository.getByID(orderRequest.getUserID());
-        Order order = OrderMapper.toEntity(orderRequest);
+        Ordering order = OrderMapper.toEntity(orderRequest);
         order.setUser(user);
         return OrderMapper.toDTO(repository.update(order));
     }
@@ -48,7 +48,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderResponse> findAll() {
-        List<Order> orders = repository.findAll();
+        List<Ordering> orders = repository.findAll();
         return orders.stream()
                 .map(OrderMapper::toDTO)
                 .collect(Collectors.toList());

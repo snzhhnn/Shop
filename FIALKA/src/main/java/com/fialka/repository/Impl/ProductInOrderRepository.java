@@ -1,66 +1,66 @@
 package com.fialka.repository.Impl;
 
-import com.fialka.model.Ordering;
-import org.hibernate.Session;
-import com.fialka.repository.IOrderRepository;
+import com.fialka.model.ProductInOrder;
+import com.fialka.repository.IProductInOrderRepository;
 import com.fialka.util.HibernateUtil;
+import org.hibernate.Session;
 
 import java.util.List;
 import java.util.UUID;
 
-public class OrderRepository implements IOrderRepository {
+public class ProductInOrderRepository implements IProductInOrderRepository {
     @Override
-    public Ordering getByID(UUID id) {
+    public ProductInOrder getByID(UUID id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Ordering order = session.get(Ordering.class, id);
+        ProductInOrder productInOrder = session.get(ProductInOrder.class, id);
         session.getTransaction().commit();
         session.close();
-        return order;
+        return productInOrder;
     }
 
     @Override
-    public Ordering save(Ordering order) {
+    public ProductInOrder save(ProductInOrder productInOrder) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.save(order);
+        session.save(productInOrder);
         session.getTransaction().commit();
         session.close();
-        return order;
+        return productInOrder;
     }
 
     @Override
-    public Ordering update(Ordering order) {
+    public ProductInOrder update(ProductInOrder productInOrder) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.merge(order);
+        session.merge(productInOrder);
         session.getTransaction().commit();
         session.close();
-        return order;
+        return productInOrder;
     }
 
     @Override
-    public Ordering delete(Ordering order) {
+    public ProductInOrder delete(ProductInOrder productInOrder) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.remove(order);
+        session.remove(productInOrder);
         session.getTransaction().commit();
         session.close();
-        return order;
+        return productInOrder;
     }
 
     @Override
-    public List<Ordering> findAll() {
+    public List<ProductInOrder> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        List<Ordering> orders = session.createQuery("from Order", Ordering.class).getResultList();
+        List<ProductInOrder> productInOrders = session.createQuery("from ProductInOrder", ProductInOrder.class).getResultList();
         session.getTransaction().commit();
         session.close();
-        return orders;
+        return productInOrders;
     }
 
     @Override
-    public List<Ordering> filter() {
+    public List<ProductInOrder> filter() {
         return null;
     }
 }

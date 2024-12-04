@@ -19,8 +19,9 @@
     <property name="hibernate.current_session_context_class">thread</property>
     <mapping class="com.fialka.model.User"/>
     <mapping class="com.fialka.model.Warehouse"/>
-    <mapping class="com.fialka.model.Order"/>
+    <mapping class="com.fialka.model.Ordering"/>
     <mapping class="com.fialka.model.Product"/>
     <mapping class="com.fialka.model.ProductLocation"/>
+    <mapping class="com.fialka.model.ProductInOrder"/>
   </session-factory>
 </hibernate-configuration>

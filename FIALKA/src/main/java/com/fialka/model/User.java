@@ -33,5 +33,5 @@ public class User {
     private Byte photo;
 
     @OneToMany(cascade = CascadeType.MERGE)
-    private List<Order> orders;
+    private List<Ordering> orders;
 }

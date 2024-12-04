@@ -10,6 +10,7 @@ import java.util.UUID;
 @Builder
 public class OrderRequest {
     private UUID id;
+    private String status;
     private LocalDate orderDate;
     private UUID userID;
 }

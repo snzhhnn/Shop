@@ -11,6 +11,7 @@ import java.util.UUID;
 @Builder
 public class OrderResponse {
     private UUID id;
+    private String status;
     private LocalDate orderDate;
     private User user;
 }

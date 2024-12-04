@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,21 +15,17 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "product")
-public class Product {
+@Table(name = "\"order\"")
+public class Ordering {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private String title;
-    private String color;
-    private double price;
-    private String parameter;
-    private String description;
-    private byte[] photos;
+    private LocalDate orderDate;
+    private String status;
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductLocation> productLocations;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private User user;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "order")
     private List<ProductInOrder> productInOrders;
 }
