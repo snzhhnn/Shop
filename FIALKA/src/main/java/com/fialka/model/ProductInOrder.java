@@ -19,6 +19,7 @@ public class ProductInOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private int quantity;
+    private double totalCost;
 
     @ManyToOne
     private Product product;

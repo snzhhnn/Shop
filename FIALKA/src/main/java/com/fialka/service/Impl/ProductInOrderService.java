@@ -3,8 +3,12 @@ package com.fialka.service.Impl;
 import com.fialka.dto.request.ProductInOrderRequest;
 import com.fialka.dto.response.ProductInOrderResponse;
 import com.fialka.mapper.ProductInOrderMapper;
+import com.fialka.model.Ordering;
+import com.fialka.model.Product;
 import com.fialka.model.ProductInOrder;
+import com.fialka.repository.IOrderRepository;
 import com.fialka.repository.IProductInOrderRepository;
+import com.fialka.repository.IProductRepository;
 import com.fialka.service.IProductInOrderService;
 import lombok.AllArgsConstructor;
 
@@ -16,6 +20,8 @@ import java.util.stream.Collectors;
 public class ProductInOrderService implements IProductInOrderService {
 
     private IProductInOrderRepository repository;
+    private IProductRepository productRepository;
+    private IOrderRepository orderRepository;
 
     @Override
     public ProductInOrderResponse getByID(UUID id) {
@@ -24,12 +30,26 @@ public class ProductInOrderService implements IProductInOrderService {
 
     @Override
     public ProductInOrderResponse save(ProductInOrderRequest productInOrderRequest) {
-        return ProductInOrderMapper.toDTO(repository.save(ProductInOrderMapper.toEntity(productInOrderRequest)));
+        Product product = productRepository.getByID(productInOrderRequest.getProductID());
+        Ordering ordering = orderRepository.getByID(productInOrderRequest.getOrderID());
+        ProductInOrder productInOrder = ProductInOrderMapper.toEntity(productInOrderRequest);
+        double totalCost = productInOrder.getQuantity() * product.getPrice();
+        productInOrder.setProduct(product);
+        productInOrder.setOrder(ordering);
+        productInOrder.setTotalCost(totalCost);
+        return ProductInOrderMapper.toDTO(repository.save(productInOrder));
     }
 
     @Override
     public ProductInOrderResponse update(ProductInOrderRequest productInOrderRequest) {
-        return ProductInOrderMapper.toDTO(repository.update(ProductInOrderMapper.toEntity(productInOrderRequest)));
+        Product product = productRepository.getByID(productInOrderRequest.getProductID());
+        Ordering ordering = orderRepository.getByID(productInOrderRequest.getOrderID());
+        ProductInOrder productInOrder = ProductInOrderMapper.toEntity(productInOrderRequest);
+        double totalCost = productInOrder.getQuantity() * product.getPrice();
+        productInOrder.setProduct(product);
+        productInOrder.setOrder(ordering);
+        productInOrder.setTotalCost(totalCost);
+        return ProductInOrderMapper.toDTO(repository.update(productInOrder));
     }
 
     @Override

@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -6,13 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
-
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .error-message {
+            color: white;
+            background-color: #e74c3c;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <h2>Create an Account</h2>
-    <form action="/register" method="POST">
+
+    <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+    <% if (errorMessage != null) { %>
+    <p class="error-message">
+        <%= errorMessage %>
+    </p>
+    <% } %>
+
+
+    <form action="/FIALKA_war/registration" method="POST">
         <div class="form-group">
             <label for="lastname">Lastname</label>
             <input type="text" id="lastname" name="lastname" required>
@@ -47,7 +66,7 @@
         </div>
         <div class="form-group">
             <label for="phoneNumber">Phone number</label>
-            <input type="text" id="phoneNumber" name="phoneNumber" required>
+            <input type="tel" id="phoneNumber" name="phoneNumber" pattern="\+375(44|29|33|25)[0-9]{7}" required>
         </div>
         <div class="form-group">
             <label for="address">Address</label>

@@ -2,15 +2,16 @@ package com.fialka.controller;
 
 import com.fialka.adapter.LocalDateAdapter;
 import com.fialka.dto.UserDTO;
+import com.fialka.mapper.UserMapper;
+import com.fialka.model.User;
 import com.fialka.repository.Impl.UserRepository;
 import com.fialka.service.IUserService;
 import com.fialka.service.Impl.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class UserController extends HttpServlet {
     private final IUserService service = new UserService(new UserRepository());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
         if (req.getParameter("id") != null) {
             UUID id  = UUID.fromString(req.getParameter("id"));
             service.getByID(id);

@@ -116,7 +116,7 @@ a {
 .radio-group {
     display: flex;
     align-items: center;
-    gap: 10px; /* Расстояние между элементами */
+    gap: 10px;
 }
 
 .radio-group label {

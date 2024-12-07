@@ -2,7 +2,9 @@ package com.fialka.controller;
 
 import com.fialka.dto.request.ProductInOrderRequest;
 import com.fialka.dto.response.ProductInOrderResponse;
+import com.fialka.repository.Impl.OrderRepository;
 import com.fialka.repository.Impl.ProductInOrderRepository;
+import com.fialka.repository.Impl.ProductRepository;
 import com.fialka.service.IProductInOrderService;
 import com.fialka.service.Impl.ProductInOrderService;
 import com.google.gson.Gson;
@@ -20,7 +22,7 @@ import java.util.UUID;
 @WebServlet(name = "ProductInOrderController", value = "/product-in-order")
 public class ProductInOrderController extends HttpServlet {
 
-    private IProductInOrderService service = new ProductInOrderService(new ProductInOrderRepository());
+    private IProductInOrderService service = new ProductInOrderService(new ProductInOrderRepository(), new ProductRepository(), new OrderRepository());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

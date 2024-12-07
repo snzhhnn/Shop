@@ -23,7 +23,8 @@ public class Ordering {
     private LocalDate orderDate;
     private String status;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
+    @JoinColumn
     private User user;
 
     @OneToMany(mappedBy = "order")

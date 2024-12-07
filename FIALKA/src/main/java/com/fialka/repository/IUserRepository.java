@@ -12,4 +12,6 @@ public interface IUserRepository {
     User delete(User user);
     List<User> findAll();
     List<User> filter();
+    List<User> checkExistForLogin(String username);
+    List<User> checkExistForRegistration(String username, String email, String phoneNumber);
 }

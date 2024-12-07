@@ -19,6 +19,7 @@ import java.util.UUID;
 @Table(name = "\"user\"")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String lastname;
     private String firstname;
@@ -32,6 +33,4 @@ public class User {
     private String email;
     private Byte photo;
 
-    @OneToMany(cascade = CascadeType.MERGE)
-    private List<Ordering> orders;
 }

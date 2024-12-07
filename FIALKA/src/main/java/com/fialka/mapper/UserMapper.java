@@ -2,6 +2,9 @@ package com.fialka.mapper;
 
 import com.fialka.dto.UserDTO;
 import com.fialka.model.User;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.time.LocalDate;
 
 public class UserMapper {
     public static User toEntity(UserDTO userDTO) {
@@ -43,6 +46,22 @@ public class UserMapper {
                 .address(user.getAddress())
                 .email(user.getEmail())
                 .photo(user.getPhoto())
+                .build();
+    }
+
+    public static UserDTO createDTO(HttpServletRequest req) {
+        return UserDTO.builder()
+                .lastname(req.getParameter("lastname"))
+                .firstname(req.getParameter("firstname"))
+                .surname(req.getParameter("surname"))
+                .birthdate(LocalDate.parse(req.getParameter("birthdate")))
+                .username(req.getParameter("username"))
+                .password(req.getParameter("password"))
+                .email(req.getParameter("email"))
+                .phoneNumber(req.getParameter("phoneNumber"))
+                .confirmPassword(req.getParameter("confirmPassword"))
+                .address(req.getParameter("address"))
+                .gender(req.getParameter("gender"))
                 .build();
     }
 }
