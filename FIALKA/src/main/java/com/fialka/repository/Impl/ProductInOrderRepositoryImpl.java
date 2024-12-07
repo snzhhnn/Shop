@@ -1,20 +1,18 @@
 package com.fialka.repository.Impl;
 
 import com.fialka.model.ProductInOrder;
-import com.fialka.repository.IProductInOrderRepository;
+import com.fialka.repository.ProductInOrderRepository;
 import com.fialka.util.HibernateUtil;
 import org.hibernate.Session;
 
 import java.util.List;
 import java.util.UUID;
 
-public class ProductInOrderRepository implements IProductInOrderRepository {
+public class ProductInOrderRepositoryImpl implements ProductInOrderRepository {
     @Override
     public ProductInOrder getByID(UUID id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
         ProductInOrder productInOrder = session.get(ProductInOrder.class, id);
-        session.getTransaction().commit();
         session.close();
         return productInOrder;
     }
@@ -52,9 +50,7 @@ public class ProductInOrderRepository implements IProductInOrderRepository {
     @Override
     public List<ProductInOrder> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
         List<ProductInOrder> productInOrders = session.createQuery("from ProductInOrder", ProductInOrder.class).getResultList();
-        session.getTransaction().commit();
         session.close();
         return productInOrders;
     }

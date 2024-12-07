@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.UUID;
 
-public interface IUserService {
+public interface UserService {
     UserDTO getByID(UUID id);
     UserDTO save(UserDTO userDTO);
     UserDTO update(UserDTO userDTO);

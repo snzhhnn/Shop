@@ -1,8 +1,8 @@
 package com.fialka.controller;
 
-import com.fialka.repository.Impl.UserRepository;
-import com.fialka.service.IUserService;
-import com.fialka.service.Impl.UserService;
+import com.fialka.repository.Impl.UserRepositoryImpl;
+import com.fialka.service.UserService;
+import com.fialka.service.Impl.UserServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "RegistrationController", value = "/registration")
 public class RegistrationController extends HttpServlet {
 
-    private IUserService userService = new UserService(new UserRepository());
+    private final UserService userService = new UserServiceImpl(new UserRepositoryImpl());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

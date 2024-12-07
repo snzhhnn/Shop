@@ -2,19 +2,17 @@ package com.fialka.repository.Impl;
 
 import com.fialka.model.ProductLocation;
 import org.hibernate.Session;
-import com.fialka.repository.IProductLocationRepository;
+import com.fialka.repository.ProductLocationRepository;
 import com.fialka.util.HibernateUtil;
 
 import java.util.List;
 import java.util.UUID;
 
-public class ProductLocationRepository implements IProductLocationRepository {
+public class ProductLocationRepositoryImpl implements ProductLocationRepository {
     @Override
     public ProductLocation getByID(UUID id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
         ProductLocation productLocation = session.get(ProductLocation.class, id);
-        session.getTransaction().commit();
         session.close();
         return productLocation;
     }
@@ -52,10 +50,7 @@ public class ProductLocationRepository implements IProductLocationRepository {
     @Override
     public List<ProductLocation> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<ProductLocation> productLocations = session.createQuery("from ProductLocation", ProductLocation.class)
-                .getResultList();
-        session.getTransaction().commit();
+        List<ProductLocation> productLocations = session.createQuery("from ProductLocation", ProductLocation.class).getResultList();
         session.close();
         return productLocations;
     }

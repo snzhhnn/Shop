@@ -2,11 +2,11 @@ package com.fialka.controller;
 
 import com.fialka.dto.request.ProductInOrderRequest;
 import com.fialka.dto.response.ProductInOrderResponse;
-import com.fialka.repository.Impl.OrderRepository;
-import com.fialka.repository.Impl.ProductInOrderRepository;
-import com.fialka.repository.Impl.ProductRepository;
-import com.fialka.service.IProductInOrderService;
-import com.fialka.service.Impl.ProductInOrderService;
+import com.fialka.repository.Impl.OrderRepositoryImpl;
+import com.fialka.repository.Impl.ProductInOrderRepositoryImpl;
+import com.fialka.repository.Impl.ProductRepositoryImpl;
+import com.fialka.service.ProductInOrderService;
+import com.fialka.service.Impl.ProductInOrderServiceImpl;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,34 +22,34 @@ import java.util.UUID;
 @WebServlet(name = "ProductInOrderController", value = "/product-in-order")
 public class ProductInOrderController extends HttpServlet {
 
-    private IProductInOrderService service = new ProductInOrderService(new ProductInOrderRepository(), new ProductRepository(), new OrderRepository());
+    private final ProductInOrderService productInOrderService = new ProductInOrderServiceImpl(new ProductInOrderRepositoryImpl(), new ProductRepositoryImpl(), new OrderRepositoryImpl());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         if (req.getParameter("id") != null) {
             UUID id = UUID.fromString(req.getParameter("id"));
-            service.getByID(id);
+            productInOrderService.getByID(id);
         } else {
-            List<ProductInOrderResponse> product = service.findAll();
+            List<ProductInOrderResponse> products = productInOrderService.findAll();
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         ProductInOrderRequest product = getJsonFromRequest(req);
-        service.save(product);
+        productInOrderService.save(product);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         ProductInOrderRequest product = getJsonFromRequest(req);
-        service.update(product);
+        productInOrderService.update(product);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         ProductInOrderRequest product = getJsonFromRequest(req);
-        service.delete(product);
+        productInOrderService.delete(product);
     }
 
     private ProductInOrderRequest getJsonFromRequest(HttpServletRequest req) {

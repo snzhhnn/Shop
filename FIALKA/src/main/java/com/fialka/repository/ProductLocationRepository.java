@@ -5,7 +5,7 @@ import com.fialka.model.ProductLocation;
 import java.util.List;
 import java.util.UUID;
 
-public interface IProductLocationRepository {
+public interface ProductLocationRepository {
     ProductLocation getByID(UUID id);
     ProductLocation save(ProductLocation productLocation);
     ProductLocation update(ProductLocation productLocation);

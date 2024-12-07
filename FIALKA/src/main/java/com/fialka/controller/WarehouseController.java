@@ -2,9 +2,9 @@ package com.fialka.controller;
 
 
 import com.fialka.dto.WarehouseDTO;
-import com.fialka.repository.Impl.WarehouseRepository;
-import com.fialka.service.IWarehouseService;
-import com.fialka.service.Impl.WarehouseService;
+import com.fialka.repository.Impl.WarehouseRepositoryImpl;
+import com.fialka.service.WarehouseService;
+import com.fialka.service.Impl.WarehouseServiceImpl;
 import com.google.gson.Gson;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,34 +17,34 @@ import java.util.UUID;
 
 @WebServlet(name = "warehouseController", value = "/warehouse")
 public class WarehouseController extends HttpServlet {
-    private final IWarehouseService service = new WarehouseService(new WarehouseRepository());
+    private final WarehouseService warehouseService = new WarehouseServiceImpl(new WarehouseRepositoryImpl());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         if (req.getParameter("id") != null) {
             UUID id  = UUID.fromString(req.getParameter("id"));
-            service.getByID(id);
+            warehouseService.getByID(id);
         } else {
-            service.findAll();
+            warehouseService.findAll();
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         WarehouseDTO warehouseDTO = getJsonFromRequest(req);
-        service.save(warehouseDTO);
+        warehouseService.save(warehouseDTO);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         WarehouseDTO warehouseDTO = getJsonFromRequest(req);
-        service.update(warehouseDTO);
+        warehouseService.update(warehouseDTO);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         WarehouseDTO warehouseDTO = getJsonFromRequest(req);
-        service.delete(warehouseDTO);
+        warehouseService.delete(warehouseDTO);
     }
 
     private WarehouseDTO getJsonFromRequest(HttpServletRequest req) {

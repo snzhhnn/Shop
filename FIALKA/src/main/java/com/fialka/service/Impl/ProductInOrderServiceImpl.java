@@ -6,10 +6,10 @@ import com.fialka.mapper.ProductInOrderMapper;
 import com.fialka.model.Ordering;
 import com.fialka.model.Product;
 import com.fialka.model.ProductInOrder;
-import com.fialka.repository.IOrderRepository;
-import com.fialka.repository.IProductInOrderRepository;
-import com.fialka.repository.IProductRepository;
-import com.fialka.service.IProductInOrderService;
+import com.fialka.repository.OrderRepository;
+import com.fialka.repository.ProductInOrderRepository;
+import com.fialka.repository.ProductRepository;
+import com.fialka.service.ProductInOrderService;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -17,15 +17,15 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-public class ProductInOrderService implements IProductInOrderService {
+public class ProductInOrderServiceImpl implements ProductInOrderService {
 
-    private IProductInOrderRepository repository;
-    private IProductRepository productRepository;
-    private IOrderRepository orderRepository;
+    private ProductInOrderRepository productInOrderRepository;
+    private ProductRepository productRepository;
+    private OrderRepository orderRepository;
 
     @Override
     public ProductInOrderResponse getByID(UUID id) {
-        return ProductInOrderMapper.toDTO(repository.getByID(id));
+        return ProductInOrderMapper.toDTO(productInOrderRepository.getByID(id));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ProductInOrderService implements IProductInOrderService {
         productInOrder.setProduct(product);
         productInOrder.setOrder(ordering);
         productInOrder.setTotalCost(totalCost);
-        return ProductInOrderMapper.toDTO(repository.save(productInOrder));
+        return ProductInOrderMapper.toDTO(productInOrderRepository.save(productInOrder));
     }
 
     @Override
@@ -49,17 +49,17 @@ public class ProductInOrderService implements IProductInOrderService {
         productInOrder.setProduct(product);
         productInOrder.setOrder(ordering);
         productInOrder.setTotalCost(totalCost);
-        return ProductInOrderMapper.toDTO(repository.update(productInOrder));
+        return ProductInOrderMapper.toDTO(productInOrderRepository.update(productInOrder));
     }
 
     @Override
     public ProductInOrderResponse delete(ProductInOrderRequest productInOrderRequest) {
-        return ProductInOrderMapper.toDTO(repository.delete(ProductInOrderMapper.toEntity(productInOrderRequest)));
+        return ProductInOrderMapper.toDTO(productInOrderRepository.delete(ProductInOrderMapper.toEntity(productInOrderRequest)));
     }
 
     @Override
     public List<ProductInOrderResponse> findAll() {
-        List<ProductInOrder> productInOrders = repository.findAll();
+        List<ProductInOrder> productInOrders = productInOrderRepository.findAll();
         return productInOrders.stream()
                 .map(ProductInOrderMapper::toDTO)
                 .collect(Collectors.toList());

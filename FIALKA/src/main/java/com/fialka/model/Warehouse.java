@@ -22,6 +22,6 @@ public class Warehouse {
     private String title;
     private String address;
 
-    @OneToMany(mappedBy = "warehouse")
+    @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
     private List<ProductLocation> productLocations;
 }

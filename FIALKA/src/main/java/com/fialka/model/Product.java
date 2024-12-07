@@ -26,9 +26,9 @@ public class Product {
     private String description;
     private byte[] photos;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductLocation> productLocations;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductInOrder> productInOrders;
 }

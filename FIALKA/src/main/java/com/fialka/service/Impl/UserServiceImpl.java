@@ -1,6 +1,8 @@
 package com.fialka.service.Impl;
 
 import com.fialka.dto.UserDTO;
+import com.fialka.exception.NonUserDataException;
+import com.fialka.exception.UserExistException;
 import com.fialka.mapper.UserMapper;
 import com.fialka.validator.UserValidator;
 import jakarta.servlet.ServletException;
@@ -8,8 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import com.fialka.model.User;
-import com.fialka.repository.IUserRepository;
-import com.fialka.service.IUserService;
+import com.fialka.repository.UserRepository;
+import com.fialka.service.UserService;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,9 +19,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-public class UserService implements IUserService {
+public class UserServiceImpl implements UserService {
 
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public UserDTO getByID(UUID id) {
@@ -66,7 +68,7 @@ public class UserService implements IUserService {
             } else {
                 redirect(resp, userDTO);
             }
-        } catch (NullPointerException e) {
+        } catch (NonUserDataException e) {
             forward(req, resp, "The specified username doesn't exist.");
         }
     }
@@ -81,27 +83,27 @@ public class UserService implements IUserService {
         UserDTO registrationUser;
         try {
             isRegistrationUser(userDTO);
-            forward(req, resp, "A user with the same data is already exists. Try a different email, phone number or username.");
-        } catch (NullPointerException e) {
             registrationUser = this.save(userDTO);
             redirect(resp, registrationUser);
+        } catch (UserExistException e) {
+            forward(req, resp, "A user with the same data is already exists. Try a different email, phone number or username.");
         }
     }
 
-    private UserDTO isLoginUser(String username) {
+    private UserDTO isLoginUser(String username) throws NonUserDataException {
         List<User> users = userRepository.checkExistForLogin(username);
         if (!users.isEmpty()) {
             return UserMapper.toDTO(users.get(0));
         } else {
-            throw new NullPointerException();
+            throw new NonUserDataException();
         }
     }
 
 
-    private void isRegistrationUser(UserDTO userDTO) {
+    private void isRegistrationUser(UserDTO userDTO) throws UserExistException {
         List<User> users = userRepository.checkExistForRegistration(userDTO.getEmail(), userDTO.getUsername(), userDTO.getPhoneNumber());
-        if (users.isEmpty()) {
-            throw new NullPointerException();
+        if (!users.isEmpty()) {
+            throw new UserExistException();
         }
     }
 

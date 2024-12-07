@@ -5,7 +5,7 @@ import com.fialka.model.User;
 import java.util.List;
 import java.util.UUID;
 
-public interface IUserRepository {
+public interface UserRepository {
     User getByID(UUID id);
     User save(User user);
     User update(User user);

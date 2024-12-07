@@ -6,7 +6,7 @@ import com.fialka.dto.response.ProductInOrderResponse;
 import java.util.List;
 import java.util.UUID;
 
-public interface IProductInOrderService {
+public interface ProductInOrderService {
     ProductInOrderResponse getByID(UUID id);
     ProductInOrderResponse save(ProductInOrderRequest productInOrderRequest);
     ProductInOrderResponse update(ProductInOrderRequest productInOrderRequest);

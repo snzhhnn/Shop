@@ -2,16 +2,15 @@ package com.fialka.controller;
 
 import com.fialka.dto.ProductDTO;
 import com.fialka.dto.UserDTO;
-import com.fialka.repository.Impl.ProductRepository;
-import com.fialka.repository.Impl.UserRepository;
-import com.fialka.service.IProductService;
-import com.fialka.service.IUserService;
-import com.fialka.service.Impl.ProductService;
-import com.fialka.service.Impl.UserService;
+import com.fialka.repository.Impl.ProductRepositoryImpl;
+import com.fialka.repository.Impl.UserRepositoryImpl;
+import com.fialka.service.ProductService;
+import com.fialka.service.UserService;
+import com.fialka.service.Impl.ProductServiceImpl;
+import com.fialka.service.Impl.UserServiceImpl;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,19 +20,19 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-@WebServlet(name = "productController", value = "/product")
+@WebServlet(name = "ProductController", value = "/product")
 public class ProductController extends HttpServlet {
 
-    private final IProductService service = new ProductService(new ProductRepository());
-    private final IUserService userService = new UserService(new UserRepository());
+    private final ProductService productService = new ProductServiceImpl(new ProductRepositoryImpl());
+    private final UserService userService = new UserServiceImpl(new UserRepositoryImpl());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("id") != null) {
             UUID id  = UUID.fromString(req.getParameter("id"));
-            service.getByID(id);
+            productService.getByID(id);
         } else {
-            List<ProductDTO> productDTOS = service.findAll();
+            List<ProductDTO> productDTOS = productService.findAll();
             UUID id = UUID.fromString(req.getParameter("idUser"));
             UserDTO userDTO = userService.getByID(id);
             req.setAttribute("productDTOS", productDTOS);
@@ -45,19 +44,19 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         ProductDTO productDTO = getJsonFromRequest(req);
-        service.save(productDTO);
+        productService.save(productDTO);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         ProductDTO productDTO = getJsonFromRequest(req);
-        service.update(productDTO);
+        productService.update(productDTO);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         ProductDTO productDTO = getJsonFromRequest(req);
-        service.delete(productDTO);
+        productService.delete(productDTO);
     }
 
     private ProductDTO getJsonFromRequest(HttpServletRequest req) {

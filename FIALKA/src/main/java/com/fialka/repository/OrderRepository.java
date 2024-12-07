@@ -5,7 +5,7 @@ import com.fialka.model.Ordering;
 import java.util.List;
 import java.util.UUID;
 
-public interface IOrderRepository {
+public interface OrderRepository {
     Ordering getByID(UUID id);
     Ordering save(Ordering order);
     Ordering update(Ordering order);

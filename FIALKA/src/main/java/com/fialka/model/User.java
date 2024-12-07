@@ -32,5 +32,4 @@ public class User {
     private String address;
     private String email;
     private Byte photo;
-
 }

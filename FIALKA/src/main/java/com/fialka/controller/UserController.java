@@ -2,14 +2,11 @@ package com.fialka.controller;
 
 import com.fialka.adapter.LocalDateAdapter;
 import com.fialka.dto.UserDTO;
-import com.fialka.mapper.UserMapper;
-import com.fialka.model.User;
-import com.fialka.repository.Impl.UserRepository;
-import com.fialka.service.IUserService;
-import com.fialka.service.Impl.UserService;
+import com.fialka.repository.Impl.UserRepositoryImpl;
+import com.fialka.service.UserService;
+import com.fialka.service.Impl.UserServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
@@ -20,34 +17,34 @@ import java.util.UUID;
 
 @WebServlet(name = "userController", value = "/user")
 public class UserController extends HttpServlet {
-    private final IUserService service = new UserService(new UserRepository());
+    private final UserService userService = new UserServiceImpl(new UserRepositoryImpl());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
         if (req.getParameter("id") != null) {
             UUID id  = UUID.fromString(req.getParameter("id"));
-            service.getByID(id);
+            userService.getByID(id);
         } else {
-            service.findAll();
+            userService.findAll();
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         UserDTO userDTO = getJsonFromRequest(req);
-        service.save(userDTO);
+        userService.save(userDTO);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         UserDTO userDTO = getJsonFromRequest(req);
-        service.update(userDTO);
+        userService.update(userDTO);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         UserDTO userDTO = getJsonFromRequest(req);
-        service.delete(userDTO);
+        userService.delete(userDTO);
     }
 
     private UserDTO getJsonFromRequest(HttpServletRequest req) {

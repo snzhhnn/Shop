@@ -6,7 +6,7 @@ import com.fialka.dto.response.ProductLocationResponse;
 import java.util.List;
 import java.util.UUID;
 
-public interface IProductLocationService {
+public interface ProductLocationService {
     ProductLocationResponse getByID(UUID id);
     ProductLocationResponse save(ProductLocationRequest productLocationRequest);
     ProductLocationResponse update(ProductLocationRequest productLocationRequest);

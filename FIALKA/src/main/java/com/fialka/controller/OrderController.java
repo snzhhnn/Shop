@@ -2,11 +2,10 @@ package com.fialka.controller;
 
 import com.fialka.adapter.LocalDateAdapter;
 import com.fialka.dto.request.OrderRequest;
-import com.fialka.dto.response.OrderResponse;
-import com.fialka.repository.Impl.OrderRepository;
-import com.fialka.repository.Impl.UserRepository;
-import com.fialka.service.IOrderService;
-import com.fialka.service.Impl.OrderService;
+import com.fialka.repository.Impl.OrderRepositoryImpl;
+import com.fialka.repository.Impl.UserRepositoryImpl;
+import com.fialka.service.OrderService;
+import com.fialka.service.Impl.OrderServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
@@ -18,39 +17,38 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @WebServlet(name = "OrderController", value = "/order")
 public class OrderController extends HttpServlet {
-    private final IOrderService service = new OrderService(new OrderRepository(), new UserRepository());
+    private final OrderService orderService = new OrderServiceImpl(new OrderRepositoryImpl(), new UserRepositoryImpl());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
         if (req.getParameter("id") != null) {
             UUID id  = UUID.fromString(req.getParameter("id"));
-            service.getByID(id);
+            orderService.getByID(id);
         } else {
-            service.findAll();
+            orderService.findAll();
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         OrderRequest orderRequest = getJsonFromRequest(req);
-        service.save(orderRequest);
+        orderService.save(orderRequest);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         OrderRequest orderRequest = getJsonFromRequest(req);
-        service.update(orderRequest);
+        orderService.update(orderRequest);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         OrderRequest orderRequest = getJsonFromRequest(req);
-        service.delete(orderRequest);
+        orderService.delete(orderRequest);
     }
 
     private OrderRequest getJsonFromRequest(HttpServletRequest req) {

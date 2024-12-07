@@ -1,66 +1,62 @@
 package com.fialka.repository.Impl;
 
-import com.fialka.model.Warehouse;
+import com.fialka.model.Product;
 import org.hibernate.Session;
-import com.fialka.repository.IWarehouseRepository;
+import com.fialka.repository.ProductRepository;
 import com.fialka.util.HibernateUtil;
 
 import java.util.List;
 import java.util.UUID;
 
-public class WarehouseRepository implements IWarehouseRepository {
+public class ProductRepositoryImpl implements ProductRepository {
     @Override
-    public Warehouse getByID(UUID id) {
+    public Product getByID(UUID id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Warehouse warehouse = session.get(Warehouse.class, id);
-        session.getTransaction().commit();
+        Product product = session.get(Product.class, id);
         session.close();
-        return warehouse;
+        return product;
     }
 
     @Override
-    public Warehouse save(Warehouse warehouse) {
+    public Product save(Product product) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.save(warehouse);
+        session.save(product);
         session.getTransaction().commit();
         session.close();
-        return warehouse;
+        return product;
     }
 
     @Override
-    public Warehouse update(Warehouse warehouse) {
+    public Product update(Product product) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.merge(warehouse);
+        session.merge(product);
         session.getTransaction().commit();
         session.close();
-        return warehouse;
+        return product;
     }
 
     @Override
-    public Warehouse delete(Warehouse warehouse) {
+    public Product delete(Product product) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.remove(warehouse);
+        session.remove(product);
         session.getTransaction().commit();
         session.close();
-        return warehouse;
+        return product;
     }
 
     @Override
-    public List<Warehouse> findAll() {
+    public List<Product> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<Warehouse> warehouses = session.createQuery("from Warehouse", Warehouse.class).getResultList();
-        session.getTransaction().commit();
+        List<Product> products = session.createQuery("from Product", Product.class).getResultList();
         session.close();
-        return warehouses;
+        return products;
     }
 
     @Override
-    public List<Warehouse> filter() {
+    public List<Product> filter() {
         return null;
     }
 }

@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "\"order\"")
+@Table(name = "ordering")
 public class Ordering {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +27,6 @@ public class Ordering {
     @JoinColumn
     private User user;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private List<ProductInOrder> productInOrders;
 }

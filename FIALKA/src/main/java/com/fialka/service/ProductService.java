@@ -5,7 +5,7 @@ import com.fialka.dto.ProductDTO;
 import java.util.List;
 import java.util.UUID;
 
-public interface IProductService {
+public interface ProductService {
     ProductDTO getByID(UUID id);
     ProductDTO save(ProductDTO productDTO);
     ProductDTO update(ProductDTO productDTO);

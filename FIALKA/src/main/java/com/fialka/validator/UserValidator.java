@@ -8,6 +8,10 @@ import java.time.temporal.ChronoUnit;
 
 public class UserValidator {
     public static boolean validate(UserDTO userDTO) {
+        if (userDTO == null) {
+            return false;
+        }
+
         if (userDTO.getPassword() == null || userDTO.getPassword().length() <= 8) {
             return false;
         }
@@ -44,9 +48,9 @@ public class UserValidator {
             return false;
         }
 
-//        if (!userDTO.getPhoneNumber().matches("^\\+?\\d{10,15}$")) {
-//            return false;
-//        }
+        if (!userDTO.getPhoneNumber().matches("\\+375(44|29|33|25)\\d{7}")) {
+            return false;
+        }
 
         return userDTO.getBirthdate() != null && ChronoUnit.YEARS.between(userDTO.getBirthdate(), LocalDate.now()) >= 18;
     }
