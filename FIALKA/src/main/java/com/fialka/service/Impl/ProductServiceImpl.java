@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
             maxPrice = Double.parseDouble(req.getParameter("max-price"));
         }
 
-        if (req.getParameter("category") != null) {
+        if (!req.getParameter("category").isEmpty()) {
             category = req.getParameter("category");
         }
         List<ProductDTO> products = productRepository.filter(minPrice, maxPrice, category).stream()
@@ -70,6 +70,18 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
 
         forward(req, resp, products);
+    }
+
+    @Override
+    public void search(HttpServletRequest req, HttpServletResponse resp) {
+        String title;
+        if (!req.getParameter("title").isEmpty()) {
+            title = req.getParameter("title");
+            List<ProductDTO> products = productRepository.getByTitle(title).stream()
+                    .map(ProductMapper::toDTO)
+                    .collect(Collectors.toList());
+            forward(req, resp, products);
+        }
     }
 
     private void forward(HttpServletRequest req, HttpServletResponse resp, List<ProductDTO> productDTOS) {

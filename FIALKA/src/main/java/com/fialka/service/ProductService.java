@@ -14,4 +14,5 @@ public interface ProductService {
     ProductDTO delete(ProductDTO productDTO);
     List<ProductDTO> findAll();
     void filter(HttpServletRequest req, HttpServletResponse resp);
+    void search(HttpServletRequest req, HttpServletResponse resp);
 }

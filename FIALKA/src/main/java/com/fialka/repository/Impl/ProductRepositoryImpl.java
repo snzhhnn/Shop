@@ -24,6 +24,16 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public List<Product> getByTitle(String title) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Product> products = session.createQuery("from Product u where u.title= :title", Product.class)
+                .setParameter("title", title)
+                .getResultList();
+        session.close();
+        return products;
+    }
+
+    @Override
     public Product save(Product product) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
