@@ -11,5 +11,5 @@ public interface ProductRepository {
     Product update(Product product);
     Product delete(Product product);
     List<Product> findAll();
-    List<Product> filter();
+    List<Product> filter(double minPrice, double maxPrice, String category);
 }

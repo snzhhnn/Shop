@@ -1,19 +1,16 @@
 package com.fialka.controller;
 
 import com.fialka.dto.ProductDTO;
-import com.fialka.dto.UserDTO;
 import com.fialka.repository.Impl.ProductRepositoryImpl;
-import com.fialka.repository.Impl.UserRepositoryImpl;
 import com.fialka.service.ProductService;
-import com.fialka.service.UserService;
 import com.fialka.service.Impl.ProductServiceImpl;
-import com.fialka.service.Impl.UserServiceImpl;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +21,6 @@ import java.util.UUID;
 public class ProductController extends HttpServlet {
 
     private final ProductService productService = new ProductServiceImpl(new ProductRepositoryImpl());
-    private final UserService userService = new UserServiceImpl(new UserRepositoryImpl());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,11 +29,9 @@ public class ProductController extends HttpServlet {
             productService.getByID(id);
         } else {
             List<ProductDTO> productDTOS = productService.findAll();
-            UUID id = UUID.fromString(req.getParameter("idUser"));
-            UserDTO userDTO = userService.getByID(id);
-            req.setAttribute("productDTOS", productDTOS);
-            req.setAttribute("userDTO", userDTO);
-            req.getRequestDispatcher("/catalog.jsp").forward(req, resp);
+            HttpSession session = req.getSession();
+            session.setAttribute("productDTOS", productDTOS);
+            resp.sendRedirect("/FIALKA_war/catalog.jsp");
         }
     }
 

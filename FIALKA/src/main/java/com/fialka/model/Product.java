@@ -22,6 +22,7 @@ public class Product {
     private String title;
     private String color;
     private double price;
+    private String category;
     private String parameter;
     private String description;
     private byte[] photos;

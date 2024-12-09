@@ -8,6 +8,7 @@ import com.fialka.validator.UserValidator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import com.fialka.model.User;
 import com.fialka.repository.UserRepository;
@@ -64,12 +65,13 @@ public class UserServiceImpl implements UserService {
         try {
             UserDTO userDTO = isLoginUser(username);
             if (!userDTO.getPassword().equals(password)) {
-                forward(req, resp, "You entered the wrong password.");
+                forward(req, resp, "You entered the wrong password.", "/auth.jsp");
             } else {
-                redirect(resp, userDTO);
+                redirect(req, resp, userDTO);
             }
         } catch (NonUserDataException e) {
-            forward(req, resp, "The specified username doesn't exist.");
+            //redirect(req, resp, null);
+            forward(req, resp, "The specified username doesn't exist.", "/auth.jsp");
         }
     }
 
@@ -78,15 +80,15 @@ public class UserServiceImpl implements UserService {
         UserDTO userDTO = UserMapper.createDTO(req);
         boolean isValidate = UserValidator.validate(userDTO);
         if (isValidate) {
-            forward(req, resp, "The data doesn't meet the requirements.");
+            forward(req, resp, "The data doesn't meet the requirements.", "/registration.jsp");
         }
         UserDTO registrationUser;
         try {
             isRegistrationUser(userDTO);
             registrationUser = this.save(userDTO);
-            redirect(resp, registrationUser);
+            redirect(req, resp, registrationUser);
         } catch (UserExistException e) {
-            forward(req, resp, "A user with the same data is already exists. Try a different email, phone number or username.");
+            forward(req, resp, "A user with the same data is already exists. Try a different email, phone number or username.", "/registration.jsp");
         }
     }
 
@@ -107,18 +109,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void forward(HttpServletRequest req, HttpServletResponse resp, String message)  {
+    private void forward(HttpServletRequest req, HttpServletResponse resp, String message, String address)  {
         req.setAttribute("errorMessage", message);
         try {
-            req.getRequestDispatcher("/registration.jsp").forward(req, resp);
+            req.getRequestDispatcher(address).forward(req, resp);
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void redirect(HttpServletResponse resp, UserDTO registrationUser) {
+    private void redirect(HttpServletRequest req, HttpServletResponse resp, UserDTO registrationUser) {
         try {
-            resp.sendRedirect("/FIALKA_war/product?idUser=" + registrationUser.getId());
+            HttpSession session = req.getSession();
+            session.setAttribute("userDTO",registrationUser);
+            resp.sendRedirect("/FIALKA_war/product");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
