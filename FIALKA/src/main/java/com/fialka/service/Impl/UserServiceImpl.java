@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService {
         try {
             HttpSession session = req.getSession();
             session.setAttribute("userDTO",registrationUser);
-            resp.sendRedirect("/FIALKA_war/product");
+            resp.sendRedirect("/FIALKA-1.0-SNAPSHOT/product");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

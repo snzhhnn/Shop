@@ -31,7 +31,7 @@ public class ProductController extends HttpServlet {
             List<ProductDTO> productDTOS = productService.findAll();
             HttpSession session = req.getSession();
             session.setAttribute("productDTOS", productDTOS);
-            resp.sendRedirect("/FIALKA_war/catalog.jsp");
+            resp.sendRedirect("/FIALKA-1.0-SNAPSHOT/catalog.jsp");
         }
     }
 
