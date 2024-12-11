@@ -65,13 +65,13 @@ public class UserServiceImpl implements UserService {
         try {
             UserDTO userDTO = isLoginUser(username);
             if (!userDTO.getPassword().equals(password)) {
-                forward(req, resp, "You entered the wrong password.", "/auth.jsp");
+                forward(req, resp, "You entered the wrong password.");
             } else {
                 redirect(req, resp, userDTO);
             }
         } catch (NonUserDataException e) {
             //redirect(req, resp, null);
-            forward(req, resp, "The specified username doesn't exist.", "/auth.jsp");
+            forward(req, resp, "The specified username doesn't exist.");
         }
     }
 
@@ -79,8 +79,8 @@ public class UserServiceImpl implements UserService {
     public void registration(HttpServletRequest req, HttpServletResponse resp) {
         UserDTO userDTO = UserMapper.createDTO(req);
         boolean isValidate = UserValidator.validate(userDTO);
-        if (isValidate) {
-            forward(req, resp, "The data doesn't meet the requirements.", "/registration.jsp");
+        if (!isValidate) {
+            forward(req, resp, "The data doesn't meet the requirements.");
         }
         UserDTO registrationUser;
         try {
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
             registrationUser = this.save(userDTO);
             redirect(req, resp, registrationUser);
         } catch (UserExistException e) {
-            forward(req, resp, "A user with the same data is already exists. Try a different email, phone number or username.", "/registration.jsp");
+            forward(req, resp, "A user with the same data is already exists. Try a different email, phone number or username.");
         }
     }
 
@@ -109,10 +109,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void forward(HttpServletRequest req, HttpServletResponse resp, String message, String address)  {
+    private void forward(HttpServletRequest req, HttpServletResponse resp, String message)  {
         req.setAttribute("errorMessage", message);
         try {
-            req.getRequestDispatcher(address).forward(req, resp);
+            req.getRequestDispatcher("/auth.jsp").forward(req, resp);
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }

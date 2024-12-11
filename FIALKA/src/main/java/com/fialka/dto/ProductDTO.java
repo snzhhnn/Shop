@@ -15,5 +15,5 @@ public class ProductDTO {
     private String category;
     private String parameter;
     private String description;
-    private byte[] photos;
+    private String urlImage;
 }

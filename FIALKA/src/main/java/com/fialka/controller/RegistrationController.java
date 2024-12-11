@@ -21,7 +21,7 @@ public class RegistrationController extends HttpServlet {
         if (req.getParameter("idUser") != null) {
             req.getRequestDispatcher("/updateUser.jsp").forward(req, resp);
         } else {
-            req.getRequestDispatcher("/registration.jsp").forward(req, resp);
+            req.getRequestDispatcher("/auth.jsp").forward(req, resp);
         }
     }
 

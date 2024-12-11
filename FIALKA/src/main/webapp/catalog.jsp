@@ -4,224 +4,105 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catalog</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    .user-info-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .user-info-modal {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px;
-      background-color: white;
-      border: 1px solid #ddd;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .user-info-modal.active {
-      display: block;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      margin: 5px;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-      transform: scale(1.05);
-      color: white;
-    }
-
-    button:focus {
-      outline: none;
-    }
-
-    button.close {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    button.change-info {
-      background-color: #007bff;
-      color: white;
-    }
-    .filter-btn {
-      position: absolute;
-      top: 50px;
-      right: 10px;
-      padding: 10px 20px;
-      background-color: #FFA500;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .filter-modal {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px;
-      background-color: white;
-      border: 1px solid #ddd;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 300px;
-      border-radius: 8px;
-    }
-    .filter-modal.active {
-      display: block;
-    }
-    .filter-modal input, .filter-modal select {
-      width: 100%;
-      margin: 10px 0;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    .filter-modal button {
-      width: 100%;
-      margin-top: 10px;
-    }
-  </style>
-  <script>
-    <%
-      UserDTO user = (UserDTO) session.getAttribute("userDTO");
-      if (user != null) {
-    %>
-    function toggleUserInfo() {
-      const modal = document.getElementById('user-info-modal');
-      modal.classList.toggle('active');
-    }
-
-    function toggleFilterModal() {
-      const filterModal = document.getElementById('filter-modal');
-      filterModal.classList.toggle('active');
-    }
-
-    function resetFiltersOrSearch() {
-      window.location.href = '/FIALKA_war/product';
-    }
-  </script>
+  <link rel="stylesheet" href="css/resetSt.css">
+  <link rel="stylesheet" href="css/catalog.css">
+  <title>FIALKA SHOP</title>
 </head>
+
 <body>
-<div class="container">
-
-  <form action="/FIALKA_war/search" method="GET" style="margin-bottom: 20px;">
-    <input
-            type="text"
-            name="title"
-            placeholder="Search by title..."
-            style="padding: 10px; width: 300px; border: 1px solid #ddd; border-radius: 5px;"
-    >
-    <button
-            type="submit"
-            style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;"
-    >
-      Search
-    </button>
-    <button
-            type="button"
-            onclick="resetFiltersOrSearch()"
-            style="padding: 10px 20px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;"
-    >
-      Reset
-    </button>
-  </form>
-
-  <button class="filter-btn" onclick="toggleFilterModal()">Filter Products</button>
-
-  <form action="/FIALKA_war/filter" method="GET">
-  <div id="filter-modal" class="filter-modal">
-    <h3>Filter Products</h3>
-    <label for="min-price">Min Price:</label>
-    <input type="number" id="min-price" name="min-price" placeholder="Enter minimum price">
-
-    <label for="max-price">Max Price:</label>
-    <input type="number" id="max-price" name="max-price" placeholder="Enter maximum price">
-
-    <label for="category">Category:</label>
-    <select id="category" name="category">
-      <option value="">All Categories</option>
-      <option value="electronics">Electronics</option>
-      <option value="clothing">Clothing</option>
-      <option value="beauty">Beauty</option>
-      <option value="sports">Sports</option>
-      <option value="toys">Toys</option>
-      <option value="books">Books</option>
-    </select>
-
-    <input type="submit" value="Apply">
-    <button class="close" onclick="toggleUserInfo()">Close</button>
-    <button type="button" class="reset-btn" onclick="resetFiltersOrSearch()">Reset Filters</button>
-
-  </div>
-  </form>
-
-
-  <button class="user-info-btn" onclick="toggleUserInfo()">User Info</button>
-  <div id="user-info-modal" class="user-info-modal">
-    <h2>User Information</h2>
-    <p><strong>Name:</strong> <%= user.getFirstname() %> <%= user.getLastname() %> <%= user.getSurname() %></p>
-    <p><strong>Username:</strong> <%= user.getSurname() %></p>
-    <p><strong>Birthdate:</strong> <%= user.getBirthdate() %></p>
-    <p><strong>Email:</strong> <%= user.getEmail() %></p>
-    <p><strong>Phone:</strong> <%= user.getPhoneNumber() %></p>
-    <p><strong>Address:</strong> <%= user.getAddress() %></p>
-    <button class="close" onclick="toggleUserInfo()">Close</button>
-
-    <%
-    } else {
-    %>
-    <p>No user information available.</p>
-    <button onclick="toggleUserInfo()">Close</button>
-    <%
-      }
-    %>
-  </div>
-
-  <div class="header">
-    <h1>Welcome to shop «FIALKA»</h1>
-    <p>Check out our latest products</p>
-  </div>
-
-  <div class="products">
-    <%
-      List<ProductDTO> productDTOS = (List<ProductDTO>) session.getAttribute("productDTOS");
-      for (ProductDTO product : productDTOS) {
-    %>
-    <div class="product">
-      <div class="product-details">
-        <h2><%= product.getTitle()%></h2>
-        <p><%= product.getCategory()%></p>
-        <p><%= product.getDescription()%></p>
-        <p>Price: <%= product.getPrice()%></p>
-        <a href="#">Buy Now</a>
+<header class="header">
+  <div class="container">
+    <form action="/FIALKA_war/search" method="GET" class="search-container">
+      <input class="search-container-input" type="text" name="title">
+      <div class="button-group">
+        <button type="submit" class="btn btn__search">Search</button>
+        <button type="button" class="btn btn__reset" onclick="resetFiltersOrSearch(event)">Reset</button>
+        <button type="button" class="btn btn__profile" onclick="openUserProfile()">Profile</button>
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+              <%
+                UserDTO user = (UserDTO) session.getAttribute("userDTO");
+                if (user != null) {
+              %>
+              <span class="close" onclick="closeUserProfile()">&times;</span>
+              <h2>User Information</h2>
+              <p><strong>Name:</strong> <%= user.getFirstname() %> <%= user.getLastname() %> <%= user.getSurname() %></p>
+              <p><strong>Username:</strong> <%= user.getSurname() %></p>
+              <p><strong>Birthdate:</strong> <%= user.getBirthdate() %></p>
+              <p><strong>Email:</strong> <%= user.getEmail() %></p>
+              <p><strong>Phone:</strong> <%= user.getPhoneNumber() %></p>
+              <p><strong>Address:</strong> <%= user.getAddress() %></p>
+              <%
+                }
+              %>
+            </div>
+        </div>
       </div>
+  </form>
+    <div class="header-img">
+      <h1 class="header-title"> FiALKA SHOP</h1>
     </div>
-    <%
-      }
-    %>
   </div>
-</div>
+</header>
+<main class="main">
+  <div class="container">
+    <form action="/FIALKA_war/filter" method="GET" class="filter-container">
+      <div class="filter-group">
+        <label for="category">Category:</label>
+        <select name="category" id="category">
+          <option value="">Select category</option>
+          <option value="electronics">Electronics</option>
+          <option value="clothing">Clothing</option>
+          <option value="beauty">Beauty</option>
+          <option value="sports">Sports</option>
+          <option value="toys">Toys</option>
+          <option value="books">Books</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Price Range:</label>
+        <input type="number" name="min-price" placeholder="Min price" step="0.01">
+        <input type="number" name="max-price" placeholder="Max price" step="0.01">
+      </div>
+
+      <button type="submit" class="btn btn__filter">Apply Filters</button>
+      <button type="button" class="btn btn__reset__filter" onclick="resetFiltersOrSearch(event)">Reset</button>
+    </form>
+
+    <div class="card-container">
+      <%
+        List<ProductDTO> productDTOS = (List<ProductDTO>) session.getAttribute("productDTOS");
+        for (ProductDTO product : productDTOS) {
+      %>
+      <card class="card">
+        <div class="card-bg">
+          <img class="card-bg__img" src="<%= product.getUrlImage()%>" alt="">
+        </div>
+        <div class="card-content">
+          <div class="card-content__type-color">
+            <p class="card-content__type"><%= product.getCategory()%></p>
+            <p class="card-content__color"><%= product.getColor()%></p>
+          </div>
+          <h4 class="card-content__title"><%= product.getTitle()%></h4>
+
+          <div class="card-footer">
+            <p class="card-content__price"><%= product.getPrice()%>$</p>
+            <button class="btn btn__buy">Buy now</button>
+          </div>
+        </div>
+      </card>
+      <%
+        }
+      %>
+    </div>
+  </div>
+</main>
+
+<script src="js/main.js"></script>
 </body>
 </html>

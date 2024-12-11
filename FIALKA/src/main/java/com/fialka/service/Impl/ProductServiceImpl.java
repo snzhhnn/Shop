@@ -68,14 +68,13 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDTO> products = productRepository.filter(minPrice, maxPrice, category).stream()
                 .map(ProductMapper::toDTO)
                 .collect(Collectors.toList());
-
         forward(req, resp, products);
     }
 
     @Override
     public void search(HttpServletRequest req, HttpServletResponse resp) {
         String title;
-        if (!req.getParameter("title").isEmpty()) {
+        if (req.getParameter("title") != null) {
             title = req.getParameter("title");
             List<ProductDTO> products = productRepository.getByTitle(title).stream()
                     .map(ProductMapper::toDTO)

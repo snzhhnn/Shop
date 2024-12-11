@@ -21,7 +21,7 @@ public class ProductMapper {
                 .category(productDTO.getCategory())
                 .parameter(productDTO.getParameter())
                 .description(productDTO.getDescription())
-                .photos(productDTO.getPhotos())
+                .urlImage(productDTO.getUrlImage())
                 .build();
     }
 
@@ -38,7 +38,7 @@ public class ProductMapper {
                 .category(product.getCategory())
                 .parameter(product.getParameter())
                 .description(product.getDescription())
-                .photos(product.getPhotos())
+                .urlImage(product.getUrlImage())
                 .build();
     }
 }

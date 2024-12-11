@@ -25,7 +25,7 @@ public class Product {
     private String category;
     private String parameter;
     private String description;
-    private byte[] photos;
+    private String urlImage;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductLocation> productLocations;
