@@ -1,6 +1,8 @@
 package com.fialka.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fialka.dto.ProductDTO;
+import com.fialka.mapper.ProductMapper;
 import com.fialka.repository.Impl.ProductRepositoryImpl;
 import com.fialka.service.ProductService;
 import com.fialka.service.Impl.ProductServiceImpl;
@@ -31,37 +33,43 @@ public class ProductController extends HttpServlet {
             List<ProductDTO> productDTOS = productService.findAll();
             HttpSession session = req.getSession();
             session.setAttribute("productDTOS", productDTOS);
-            resp.sendRedirect("/FIALKA-1.0-SNAPSHOT/catalog.jsp");
+            resp.sendRedirect("/FIALKA_war/products.jsp");
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        ProductDTO productDTO = getJsonFromRequest(req);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProductDTO productDTO = ProductMapper.createProduct(req);
         productService.save(productDTO);
+        req.getRequestDispatcher("/products.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
-        ProductDTO productDTO = getJsonFromRequest(req);
-        productService.update(productDTO);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        ProductDTO productDTO = getJsonFromRequest(req);
-        productService.delete(productDTO);
-    }
-
-    private ProductDTO getJsonFromRequest(HttpServletRequest req) {
-        ProductDTO productDTO = null;
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        ObjectMapper mapper = new ObjectMapper();
+        StringBuilder jsonBuilder = new StringBuilder();
         try (BufferedReader reader = req.getReader()) {
-            Gson gson = new Gson();
-            productDTO = gson.fromJson(reader, ProductDTO.class);
-        } catch (IOException ex) {
-            req.setAttribute("productDTO", "There was an error: " + ex.getMessage());
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonBuilder.append(line);
+            }
         }
+        ProductDTO productDTO = mapper.readValue(jsonBuilder.toString(), ProductDTO.class);
+        productService.update(productDTO);
+        req.getRequestDispatcher("/products.jsp").forward(req, resp);
+    }
 
-        return productDTO;
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        StringBuilder jsonBuilder = new StringBuilder();
+        try (BufferedReader reader = req.getReader()) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonBuilder.append(line);
+            }
+        }
+        ProductDTO productDTO = mapper.readValue(jsonBuilder.toString(), ProductDTO.class);
+        productService.delete(productDTO);
     }
 }

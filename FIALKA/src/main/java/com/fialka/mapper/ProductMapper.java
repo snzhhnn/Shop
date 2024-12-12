@@ -2,10 +2,12 @@ package com.fialka.mapper;
 
 import com.fialka.dto.ProductDTO;
 import com.fialka.model.Product;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.UUID;
 
 public class ProductMapper {
     public static Product toEntity(ProductDTO productDTO) {
@@ -39,6 +41,18 @@ public class ProductMapper {
                 .parameter(product.getParameter())
                 .description(product.getDescription())
                 .urlImage(product.getUrlImage())
+                .build();
+    }
+
+    public static ProductDTO createProduct(HttpServletRequest req) {
+        return ProductDTO.builder()
+                .title(req.getParameter("title"))
+                .color(req.getParameter("color"))
+                .price(Double.parseDouble(req.getParameter("price")))
+                .category(req.getParameter("category"))
+                .parameter(req.getParameter("parameter"))
+                .description(req.getParameter("description"))
+                .urlImage(req.getParameter("urlImage"))
                 .build();
     }
 }

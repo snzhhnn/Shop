@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f4ef;
+    color: #6b4e3d;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+    background: #fff8f0;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.header h1 {
+    text-align: center;
+    color: #6b4e3d;
+    margin-top: 20px;
+}
+
+h2 {
+    color: #6b4e3d;
+}
+
+.card-container {
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.card-container h2 {
+    color: #6b4e3d;
+}
+
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 7px;
+    border: none;
+    font-weight: bold;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn__profile {
+    background-color: #c8a27e;
+    color: #fff;
+}
+
+.btn__profile:hover {
+    background-color: #9a7e6a;
+}
+
+.manage-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    form {
+        gap: 15px;
+    }
+
+    .filter-group input,
+    .filter-group select,
+    .filter-group textarea {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+    }
+}
