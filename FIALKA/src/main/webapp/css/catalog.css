@@ -91,11 +91,11 @@
 .card-content__type {
     padding: 4px 14px;
     border-radius: 15px;
-    background-color: #c8a27e; 
+    background-color: #c8a27e;
     margin: 10px 0px 20px 0px;
-    background: rgb(245, 238, 224); 
+    background: rgb(245, 238, 224);
     background: linear-gradient(32deg, rgba(245, 238, 224, 1) 0%, rgba(226, 211, 182, 1) 50%, rgba(202, 160, 128, 1) 100%); /* Плавный градиент коричневых оттенков */
-    color: #6b4e3d; 
+    color: #6b4e3d;
     font-weight: bold;
     width: fit-content;
 }
@@ -103,11 +103,11 @@
 .card-content__color {
     padding: 4px 14px;
     border-radius: 15px;
-    background-color: #c8a27e; 
+    background-color: #c8a27e;
     margin: 10px 0px 20px 0px;
-    background: rgb(245, 238, 224); 
+    background: rgb(245, 238, 224);
     background: linear-gradient(32deg, rgba(245, 238, 224, 1) 0%, rgba(226, 211, 182, 1) 50%, rgba(202, 160, 128, 1) 100%); /* Плавный градиент коричневых оттенков */
-    color: #6b4e3d; 
+    color: #6b4e3d;
     font-weight: bold;
     width: fit-content;
 }
@@ -129,18 +129,18 @@
 
 .card-content__type-color {
     display: flex;
-    gap: 10px; 
-    align-items: center; 
+    gap: 10px;
+    align-items: center;
 }
 
 .btn__buy {
-    background: #c8a27e; 
+    background: #c8a27e;
     color: #fff;
 }
 
 .btn__buy:hover {
     cursor: pointer;
-    background: #9a7e6a; 
+    background: #9a7e6a;
 }
 
 .filter-container {

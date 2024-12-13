@@ -24,7 +24,7 @@ public class UserMapper {
                 .gender(userDTO.getGender())
                 .address(userDTO.getAddress())
                 .email(userDTO.getEmail())
-                .photo(userDTO.getPhoto())
+                .role(userDTO.getRole())
                 .build();
     }
 
@@ -45,7 +45,7 @@ public class UserMapper {
                 .gender(user.getGender())
                 .address(user.getAddress())
                 .email(user.getEmail())
-                .photo(user.getPhoto())
+                .role(user.getRole())
                 .build();
     }
 

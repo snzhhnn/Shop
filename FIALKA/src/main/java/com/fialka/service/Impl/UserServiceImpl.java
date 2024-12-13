@@ -53,11 +53,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> filter() {
-        return null;
-    }
-
-    @Override
     public void login(HttpServletRequest req, HttpServletResponse resp) {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -70,7 +65,6 @@ public class UserServiceImpl implements UserService {
                 redirect(req, resp, userDTO);
             }
         } catch (NonUserDataException e) {
-            //redirect(req, resp, null);
             forward(req, resp, "The specified username doesn't exist.");
         }
     }
@@ -90,6 +84,11 @@ public class UserServiceImpl implements UserService {
         } catch (UserExistException e) {
             forward(req, resp, "A user with the same data is already exists. Try a different email, phone number or username.");
         }
+    }
+
+    @Override
+    public UserDTO isAdmin(String username) {
+        return UserMapper.toDTO(userRepository.checkExistForLogin(username).get(0));
     }
 
     private UserDTO isLoginUser(String username) throws NonUserDataException {
@@ -122,7 +121,7 @@ public class UserServiceImpl implements UserService {
         try {
             HttpSession session = req.getSession();
             session.setAttribute("userDTO",registrationUser);
-            resp.sendRedirect("/FIALKA-1.0-SNAPSHOT/product");
+            resp.sendRedirect("/FIALKA_war/product");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

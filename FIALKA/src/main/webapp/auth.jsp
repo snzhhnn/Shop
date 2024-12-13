@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <div class="form-box login">
-        <form action="/FIALKA-1.0-SNAPSHOT/login" method="GET">
+        <form action="/FIALKA_war/login" method="GET">
             <h1>Login</h1>
             <% String errorMessage;
                 errorMessage = (String) request.getAttribute("errorMessage"); %>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="form-box register">
-        <form action="/FIALKA-1.0-SNAPSHOT/registration" method="POST">
+        <form action="/FIALKA_war/registration" method="POST">
             <h1>Registration</h1>
             <% errorMessage = (String) request.getAttribute("errorMessage"); %>
             <% if (errorMessage != null) { %>

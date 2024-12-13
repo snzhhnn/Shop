@@ -13,7 +13,7 @@ public interface UserService {
     UserDTO update(UserDTO userDTO);
     UserDTO delete(UserDTO userDTO);
     List<UserDTO> findAll();
-    List<UserDTO> filter();
     void login(HttpServletRequest req, HttpServletResponse resp);
     void registration(HttpServletRequest req, HttpServletResponse resp);
+    UserDTO isAdmin(String username);
 }

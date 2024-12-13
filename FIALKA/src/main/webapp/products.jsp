@@ -19,7 +19,7 @@
 
     <div class="content-container">
         <h2>Product Management</h2>
-        <form action="/FIALKA_war/product" method="POST" id="productForm">
+        <form action="/FIALKA_war/products.jsp" method="POST" id="productForm">
             <div class="filter-group">
                 <label for="productName">Product Name</label>
                 <input type="text" id="productName" name="title" placeholder="Enter product name" required>

@@ -31,5 +31,5 @@ public class User {
     private String gender;
     private String address;
     private String email;
-    private Byte photo;
+    private String role;
 }

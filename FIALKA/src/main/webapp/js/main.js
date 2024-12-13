@@ -39,7 +39,7 @@ function manageProducts() {
     window.location.href = '/FIALKA_war/products.jsp';
 }
 function findAllProducts() {
-    window.location.href = '/FIALKA_war/product';
+    window.location.href = '/FIALKA_war/admin/product';
 }
 
 function deleteProduct(button) {
@@ -50,7 +50,7 @@ function deleteProduct(button) {
         console.log(productData);
 
         $.ajax({
-            url: '/FIALKA_war/product',
+            url: '/FIALKA_war/admin/product',
             type: 'DELETE',
             contentType: 'application/json',
             data: JSON.stringify(productData),
@@ -80,7 +80,7 @@ function updateProduct(id) {
         };
 
         $.ajax({
-            url: '/FIALKA_war/product',
+            url: '/FIALKA_war/admin/product',
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(productData),
@@ -96,4 +96,3 @@ function updateProduct(id) {
         });
     });
 }
-
