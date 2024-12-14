@@ -2,6 +2,8 @@ package com.fialka.controller;
 
 import com.fialka.adapter.LocalDateAdapter;
 import com.fialka.dto.UserDTO;
+import com.fialka.mapper.JsonMapper;
+import com.fialka.mapper.UserMapper;
 import com.fialka.repository.Impl.UserRepositoryImpl;
 import com.fialka.service.UserService;
 import com.fialka.service.Impl.UserServiceImpl;
@@ -31,33 +33,19 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        UserDTO userDTO = getJsonFromRequest(req);
+        UserDTO userDTO = UserMapper.toDTO(req);
         userService.save(userDTO);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
-        UserDTO userDTO = getJsonFromRequest(req);
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        UserDTO userDTO = JsonMapper.jsonToObject(req, UserDTO.class);
         userService.update(userDTO);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        UserDTO userDTO = getJsonFromRequest(req);
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        UserDTO userDTO = JsonMapper.jsonToObject(req, UserDTO.class);
         userService.delete(userDTO);
-    }
-
-    private UserDTO getJsonFromRequest(HttpServletRequest req) {
-        UserDTO userDTO = null;
-        try (BufferedReader reader = req.getReader()) {
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                    .create();
-            userDTO = gson.fromJson(reader, UserDTO.class);
-        } catch (IOException ex) {
-            req.setAttribute("userDTO", "There was an error: " + ex.getMessage());
-        }
-
-        return userDTO;
     }
 }

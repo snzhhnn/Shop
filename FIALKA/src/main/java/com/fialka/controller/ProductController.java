@@ -1,6 +1,5 @@
 package com.fialka.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fialka.dto.ProductDTO;
 import com.fialka.mapper.JsonMapper;
 import com.fialka.mapper.ProductMapper;
@@ -14,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        ProductDTO productDTO = ProductMapper.createDTO(req);
+        ProductDTO productDTO = ProductMapper.toDTO(req);
         productService.save(productDTO);
         resp.sendRedirect("/FIALKA_war/products.jsp");
     }

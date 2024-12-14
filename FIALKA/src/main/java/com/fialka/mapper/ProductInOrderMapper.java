@@ -3,6 +3,7 @@ package com.fialka.mapper;
 import com.fialka.dto.request.ProductInOrderRequest;
 import com.fialka.dto.response.ProductInOrderResponse;
 import com.fialka.model.ProductInOrder;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class ProductInOrderMapper {
     public static ProductInOrder toEntity(ProductInOrderRequest productInOrderRequest) {
@@ -24,6 +25,12 @@ public class ProductInOrderMapper {
         return ProductInOrderResponse.builder()
                 .id(productInOrder.getId())
                 .quantity(productInOrder.getQuantity())
+                .build();
+    }
+
+    public static ProductInOrderRequest toRequestDTO(HttpServletRequest req) {
+        return ProductInOrderRequest.builder()
+                .quantity(Integer.parseInt(req.getParameter("quantity")))
                 .build();
     }
 }

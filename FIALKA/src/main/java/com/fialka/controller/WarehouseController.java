@@ -34,7 +34,7 @@ public class WarehouseController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        WarehouseDTO warehouseDTO = WarehouseMapper.createDTO(req);
+        WarehouseDTO warehouseDTO = WarehouseMapper.toDTO(req);
         warehouseService.save(warehouseDTO);
         resp.sendRedirect("/FIALKA_war/warehouses.jsp");
     }
@@ -51,5 +51,4 @@ public class WarehouseController extends HttpServlet {
         WarehouseDTO warehouseDTO = JsonMapper.jsonToObject(req, WarehouseDTO.class);
         warehouseService.delete(warehouseDTO);
     }
-
 }

@@ -30,7 +30,7 @@ public class WarehouseMapper {
                 .build();
     }
 
-    public static WarehouseDTO createDTO(HttpServletRequest req) {
+    public static WarehouseDTO toDTO(HttpServletRequest req) {
         return WarehouseDTO.builder()
                 .title(req.getParameter("title"))
                 .address(req.getParameter("address"))

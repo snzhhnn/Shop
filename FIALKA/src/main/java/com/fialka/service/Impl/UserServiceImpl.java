@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registration(HttpServletRequest req, HttpServletResponse resp) {
-        UserDTO userDTO = UserMapper.createDTO(req);
+        UserDTO userDTO = UserMapper.toDTO(req);
         boolean isValidate = UserValidator.validate(userDTO);
         if (!isValidate) {
             forward(req, resp, "The data doesn't meet the requirements.");

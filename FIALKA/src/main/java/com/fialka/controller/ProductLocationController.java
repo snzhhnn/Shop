@@ -1,6 +1,8 @@
 package com.fialka.controller;
 
 import com.fialka.dto.request.ProductLocationRequest;
+import com.fialka.mapper.JsonMapper;
+import com.fialka.mapper.ProductLocationMapper;
 import com.fialka.repository.Impl.ProductLocationRepositoryImpl;
 import com.fialka.repository.Impl.ProductRepositoryImpl;
 import com.fialka.repository.Impl.WarehouseRepositoryImpl;
@@ -32,31 +34,19 @@ public class ProductLocationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        ProductLocationRequest productLocationRequest = getJsonFromRequest(req);
+        ProductLocationRequest productLocationRequest = ProductLocationMapper.toRequestDTO(req);
         productLocationService.save(productLocationRequest);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
-        ProductLocationRequest productLocationRequest = getJsonFromRequest(req);
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ProductLocationRequest productLocationRequest = JsonMapper.jsonToObject(req, ProductLocationRequest.class);
         productLocationService.update(productLocationRequest);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        ProductLocationRequest productLocationRequest = getJsonFromRequest(req);
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ProductLocationRequest productLocationRequest = JsonMapper.jsonToObject(req, ProductLocationRequest.class);
         productLocationService.delete(productLocationRequest);
-    }
-
-    private ProductLocationRequest getJsonFromRequest(HttpServletRequest req) {
-        ProductLocationRequest productLocationDTO = null;
-        try (BufferedReader reader = req.getReader()) {
-            Gson gson = new Gson();
-            productLocationDTO = gson.fromJson(reader, ProductLocationRequest.class);
-        } catch (IOException ex) {
-            req.setAttribute("productLocationDTO", "There was an error: " + ex.getMessage());
-        }
-
-        return productLocationDTO;
     }
 }

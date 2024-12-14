@@ -49,7 +49,7 @@ public class UserMapper {
                 .build();
     }
 
-    public static UserDTO createDTO(HttpServletRequest req) {
+    public static UserDTO toDTO(HttpServletRequest req) {
         return UserDTO.builder()
                 .lastname(req.getParameter("lastname"))
                 .firstname(req.getParameter("firstname"))

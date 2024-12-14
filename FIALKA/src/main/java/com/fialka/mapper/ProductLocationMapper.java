@@ -1,8 +1,10 @@
 package com.fialka.mapper;
 
+import com.fialka.dto.request.ProductInOrderRequest;
 import com.fialka.dto.request.ProductLocationRequest;
 import com.fialka.dto.response.ProductLocationResponse;
 import com.fialka.model.ProductLocation;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class ProductLocationMapper {
     public static ProductLocation toEntity(ProductLocationRequest productLocationRequest) {
@@ -26,6 +28,12 @@ public class ProductLocationMapper {
                 .quantity(productLocation.getQuantity())
                 .product(ProductMapper.toDTO(productLocation.getProduct()))
                 .warehouse(WarehouseMapper.toDTO(productLocation.getWarehouse()))
+                .build();
+    }
+
+    public static ProductLocationRequest toRequestDTO(HttpServletRequest req) {
+        return ProductLocationRequest.builder()
+                .quantity(Integer.parseInt(req.getParameter("quantity")))
                 .build();
     }
 }

@@ -12,6 +12,6 @@ public class ProductInOrderResponse {
     private UUID id;
     private double totalCost;
     private int quantity;
-    private ProductDTO productID;
-    private OrderResponse orderID;
+    private ProductDTO product;
+    private OrderResponse order;
 }
