@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Update Product</title>
-    <link rel="stylesheet" href="css/productsAddStyle.css">
+    <link rel="stylesheet" href="css/manageUpdateStyle.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -60,9 +61,11 @@
                 <label for="productUrl">Product Url Image</label>
                 <input type="text" id="productUrl" name="urlImage" value="<%= productDTO.getUrlImage()%>" required>
             </div>
-            <button type="button" class="btn btn__profile" onclick="updateProduct(<%= productDTO.getId()%>)">Update Product</button>
+            <button type="button" class="btn btn__profile" onclick="updateProduct('<%= productDTO.getId()%>')">Update Product</button>
         </form>
     </div>
 </div>
+
+<script src="js/products.js"></script>
 </body>
 </html>

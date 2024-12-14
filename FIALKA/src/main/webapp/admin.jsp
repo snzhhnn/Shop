@@ -14,10 +14,13 @@
     </header>
 
     <div class="card-container">
-        <h2>Manage Orders and Products</h2>
+        <h2>Managing</h2>
         <div style="display: flex; gap: 20px;">
-            <button class="btn btn__profile" onclick="manageOrders()">View Orders</button>
             <button class="btn btn__profile" onclick="manageProducts()">Manage Products</button>
+            <button class="btn btn__profile" onclick="manageWarehouses()">Manage Warehouse</button>
+            <button class="btn btn__profile" onclick="">Manage ProductLocation</button>
+            <button class="btn btn__profile" onclick="">Manage Orders</button>
+            <button class="btn btn__profile" onclick="">Manage ProductInOrder</button>
         </div>
     </div>
 </div>

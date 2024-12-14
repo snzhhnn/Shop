@@ -44,7 +44,7 @@ public class ProductMapper {
                 .build();
     }
 
-    public static ProductDTO createProduct(HttpServletRequest req) {
+    public static ProductDTO createDTO(HttpServletRequest req) {
         return ProductDTO.builder()
                 .title(req.getParameter("title"))
                 .color(req.getParameter("color"))

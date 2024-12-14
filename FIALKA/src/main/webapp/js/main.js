@@ -1,15 +1,3 @@
-const container = document.querySelector('.container');
-const registerBtn = document.querySelector('.register-btn');
-const loginBtn = document.querySelector('.login-btn');
-
-registerBtn.addEventListener('click', () => {
-    container.classList.add('active');
-})
-
-loginBtn.addEventListener('click', () => {
-    container.classList.remove('active');
-})
-
 document.querySelector('.register-btn').addEventListener('click', () => {
     const container = document.querySelector('.container');
     container.classList.toggle('expanded'); 
@@ -38,61 +26,6 @@ function manageOrders() {
 function manageProducts() {
     window.location.href = '/FIALKA_war/products.jsp';
 }
-function findAllProducts() {
-    window.location.href = '/FIALKA_war/admin/product';
-}
-
-function deleteProduct(button) {
-    $(document).on('click', '.btn__product', function () {
-        const button = $(this);
-        const productData = JSON.parse(button.attr('data-product'));
-
-        console.log(productData);
-
-        $.ajax({
-            url: '/FIALKA_war/admin/product',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(productData),
-            success: function (response) {
-                button.closest('.card').remove();
-            },
-            error: function (xhr, status, error) {
-                console.error('Error deleting product:', error);
-                console.error('Response:', xhr.responseText);
-            }
-        });
-    });
-}
-
-function updateProduct(id) {
-    $(document).on('click', '.btn__profile', function () {
-
-        const productData = {
-            id: id,
-            title: $('#productName').val(),
-            color: $('#productColor').val(),
-            price: $('#productPrice').val(),
-            category: $('#productCategory').val(),
-            parameter: $('#productParameter').val(),
-            description: $('#productDescription').val(),
-            urlImage: $('#productUrl').val()
-        };
-
-        $.ajax({
-            url: '/FIALKA_war/admin/product',
-            type: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify(productData),
-            success: function(response) {
-                console.log('Product updated successfully:', response);
-                alert('Product updated successfully!');
-            },
-            error: function(xhr, status, error) {
-                console.error('Error updating product:', error);
-                console.error('Response:', xhr.responseText);
-                alert('Failed to update product!');
-            }
-        });
-    });
+function manageWarehouses() {
+    window.location.href = '/FIALKA_war/warehouses.jsp';
 }
