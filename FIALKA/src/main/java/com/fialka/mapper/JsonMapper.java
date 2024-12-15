@@ -1,6 +1,7 @@
 package com.fialka.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fialka.dto.ProductDTO;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.BufferedReader;
@@ -16,6 +17,8 @@ public class JsonMapper {
                 jsonBuilder.append(line);
             }
         }
+        ProductDTO productDTO = mapper.readValue(jsonBuilder.toString(), ProductDTO.class);
+        System.out.println(productDTO.getCategory());
         return mapper.readValue(jsonBuilder.toString(), clazz);
     }
 }

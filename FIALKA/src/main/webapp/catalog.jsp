@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.fialka.dto.ProductDTO" %>
 <%@ page import="com.fialka.dto.UserDTO" %>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,9 +20,16 @@
     <form action="/FIALKA_war/search" method="GET" class="search-container">
       <input class="search-container-input" type="text" name="title">
       <div class="button-group">
-        <button type="submit" class="btn btn__search">Search</button>
-        <button type="button" class="btn btn__reset" onclick="resetFiltersOrSearch(event)">Reset</button>
-        <button type="button" class="btn btn__profile" onclick="openUserProfile()">Profile</button>
+        <div class="button-group">
+          <div class="search-reset">
+            <button type="submit" class="btn btn__search">Search</button>
+            <button type="button" class="btn btn__reset" onclick="resetFiltersOrSearch(event)">Reset</button>
+          </div>
+          <div class="profile-cart">
+            <button type="button" class="btn btn__profile" onclick="openUserProfile()">Profile</button>
+            <button type="button" class="btn btn__cart" onclick="openBucket()">Bucket</button>
+          </div>
+        </div>
         <div id="userModal" class="modal">
             <div class="modal-content">
               <%
@@ -76,6 +84,7 @@
 
     <div class="card-container">
       <%
+        ObjectMapper mapper = new ObjectMapper();
         List<ProductDTO> productDTOS = (List<ProductDTO>) session.getAttribute("productDTOS");
         for (ProductDTO product : productDTOS) {
       %>
@@ -92,7 +101,10 @@
 
           <div class="card-footer">
             <p class="card-content__price"><%= product.getPrice()%>$</p>
-            <button class="btn btn__buy">Buy now</button>
+            <form action="/FIALKA_war/bucket" method="POST">
+              <button data-product='<%= mapper.writeValueAsString(product).replace("'", "\\'")%>'
+                      class="btn btn__buy">Buy now</button>
+            </form>
           </div>
         </div>
       </card>

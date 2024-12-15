@@ -29,3 +29,29 @@ function manageProducts() {
 function manageWarehouses() {
     window.location.href = '/FIALKA_war/warehouses.jsp';
 }
+function openBucket() {
+    window.location.href = '/FIALKA_war/bucket.jsp';
+}
+
+function addProductToBucket() {
+    $(document).on('click', '.btn__buy', function () {
+        const button = $(this);
+        const productData = JSON.parse(button.attr('data-product'));
+
+        console.log(productData);
+
+        $.ajax({
+            url: '/bucket',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(productData),
+            success: function (response) {
+                console.log('Product updated successfully:', response);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error deleting product:', error);
+                console.error('Response:', xhr.responseText);
+            }
+        });
+    });
+}

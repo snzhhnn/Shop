@@ -116,7 +116,7 @@ textarea {
     background-color: #c8a27e;
     margin: 10px 0px 20px 0px;
     background: rgb(245, 238, 224);
-    background: linear-gradient(32deg, rgba(245, 238, 224, 1) 0%, rgba(226, 211, 182, 1) 50%, rgba(202, 160, 128, 1) 100%); /* Плавный градиент коричневых оттенков */
+    background: linear-gradient(32deg, rgba(245, 238, 224, 1) 0%, rgba(226, 211, 182, 1) 50%, rgba(202, 160, 128, 1) 100%);
     color: #6b4e3d;
     font-weight: bold;
     width: fit-content;
@@ -128,7 +128,7 @@ textarea {
     background-color: #c8a27e;
     margin: 10px 0px 20px 0px;
     background: rgb(245, 238, 224);
-    background: linear-gradient(32deg, rgba(245, 238, 224, 1) 0%, rgba(226, 211, 182, 1) 50%, rgba(202, 160, 128, 1) 100%); /* Плавный градиент коричневых оттенков */
+    background: linear-gradient(32deg, rgba(245, 238, 224, 1) 0%, rgba(226, 211, 182, 1) 50%, rgba(202, 160, 128, 1) 100%);
     color: #6b4e3d;
     font-weight: bold;
     width: fit-content;
